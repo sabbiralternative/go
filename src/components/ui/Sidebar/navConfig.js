@@ -62,8 +62,8 @@ export const getNavItems = (permissions, adminRole, setters) => {
           show: true,
         },
         {
-          label: "Add Client",
-          href: "/add-client",
+          label: "Add Clients",
+          href: "/add-clients",
           show:
             adminRole === AdminRole.master ||
             adminRole === AdminRole.branch_staff,
@@ -74,23 +74,48 @@ export const getNavItems = (permissions, adminRole, setters) => {
           show: true,
         },
         {
-          label: "All Client",
-          href: "/all-client",
+          label: "All Clients",
+          href: "/all-clients",
           show: true,
         },
         {
-          label: "Active Client",
-          href: "/active-client",
+          label: "Active Clients",
+          href: "/active-clients",
           show: true,
         },
         {
-          label: "Inactive Client",
-          href: "/inactive-client",
+          label: "Inactive Clients",
+          href: "/inactive-clients",
           show: true,
         },
         {
-          label: "Suspended Client",
-          href: "/suspended-client",
+          label: "Suspended Clients",
+          href: "/suspended-clients",
+          show: true,
+        },
+        {
+          label: "Non-Trusted Clients",
+          href: "/non-trusted-clients",
+          show: true,
+        },
+        {
+          label: "Trusted Clients",
+          href: "/trusted-clients",
+          show: true,
+        },
+        {
+          label: "VIP Clients",
+          href: "/vip-clients",
+          show: true,
+        },
+        {
+          label: "VVIP Clients",
+          href: "/vvip-clients",
+          show: true,
+        },
+        {
+          label: "Premium Clients",
+          href: "/premium-clients",
           show: true,
         },
       ],
@@ -369,12 +394,12 @@ export const getNavItems = (permissions, adminRole, setters) => {
           label: "Lossback",
           key: "lossback",
           willSubTab: true,
-          show: adminRole === AdminRole.master,
+          show: adminRole === AdminRole.hyper_master,
           children: [
             {
               label: "Add Lossback Bonus by Event",
               href: "/add-loss-back-bonus-by-event",
-              show: adminRole === AdminRole.master,
+              show: adminRole === AdminRole.hyper_master,
             },
             {
               label: "Add Lossback Bonus by Date",

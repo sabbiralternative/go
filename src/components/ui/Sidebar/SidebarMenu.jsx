@@ -1,15 +1,16 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import useContextState from "../../../hooks/useContextState";
 import { Fragment, useState } from "react";
 import { usePermission } from "../../../hooks/use-permission";
 import { getNavItems } from "./navConfig";
+import { setShowLeftSidebar } from "../../../redux/features/global/globalSlice";
 
 const SidebarMenu = () => {
+  const dispatch = useDispatch();
   const { adminRole } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const {
-    setShowSidebar,
     setShowAddSuperBranch,
     setShowAddBranch,
     setShowSocialLink,
@@ -21,6 +22,7 @@ const SidebarMenu = () => {
   const [sidebarItem, setSidebarItem] = useState(null);
   const [childTabList, setChildTabList] = useState(null);
   const { permissions } = usePermission();
+
   const handleOpenSidebarItem = (item) => {
     if (sidebarItem === item) {
       setSidebarItem(null);
@@ -53,7 +55,7 @@ const SidebarMenu = () => {
         if (!navItem?.show) return;
         return (
           <div
-            onClick={() => setShowSidebar(false)}
+            onClick={() => dispatch(setShowLeftSidebar(false))}
             to={navItem?.href}
             key={navIndex}
             className="menu-item"
@@ -121,7 +123,7 @@ const SidebarMenu = () => {
                               key={child?.href}
                               onClick={() => {
                                 navigate(child?.href);
-                                setShowSidebar(false);
+                                dispatch(setShowLeftSidebar(false));
                               }}
                               className="menu-item"
                             >
@@ -141,7 +143,7 @@ const SidebarMenu = () => {
                               key={child?.label}
                               onClick={() => {
                                 child?.setState(true);
-                                setShowSidebar(false);
+                                dispatch(setShowLeftSidebar(false));
                               }}
                               className="menu-item"
                             >
@@ -201,7 +203,7 @@ const SidebarMenu = () => {
                                   key={child?.href}
                                   onClick={() => {
                                     navigate(child?.href);
-                                    setShowSidebar(false);
+                                    dispatch(setShowLeftSidebar(false));
                                   }}
                                   className="menu-item"
                                 >
@@ -221,7 +223,7 @@ const SidebarMenu = () => {
                                   key={child?.label}
                                   onClick={() => {
                                     child?.setState(true);
-                                    setShowSidebar(false);
+                                    dispatch(setShowLeftSidebar(false));
                                   }}
                                   className="menu-item"
                                 >
@@ -247,7 +249,7 @@ const SidebarMenu = () => {
                         key={child?.href}
                         onClick={() => {
                           navigate(child?.href);
-                          setShowSidebar(false);
+                          dispatch(setShowLeftSidebar(false));
                         }}
                         className="menu-item"
                       >
@@ -264,7 +266,7 @@ const SidebarMenu = () => {
                         key={child?.label}
                         onClick={() => {
                           child?.setState(true);
-                          setShowSidebar(false);
+                          dispatch(setShowLeftSidebar(false));
                         }}
                         className="menu-item"
                       >

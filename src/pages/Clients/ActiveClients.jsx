@@ -1,32 +1,22 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import PageHeader from "../../components/shared/PageHeader/PageHeader";
 import { useViewClientsQuery } from "../../hooks/viewClients";
 import { AdminRole } from "../../constant/constant";
 import { useSelector } from "react-redux";
 import handleNavigateToWhatsApp from "../../utils/handleNavigateToWhatsApp";
 
-const ViewClients = () => {
+const ActiveClients = () => {
   const { adminRole } = useSelector((state) => state.auth);
-  const [clientId, setClientId] = useState(null);
-
   const { data } = useViewClientsQuery({
-    searchId: clientId,
+    searchId: "activeUsers",
     pagination: true,
   });
 
   return (
     <Fragment>
       {/* Header */}
-      <PageHeader title="View Clients" />
-      {/* Search */}
-      <div className="search-box">
-        <i className="ph ph-magnifying-glass" />
-        <input
-          onChange={(e) => setClientId(e.target.value)}
-          type="text"
-          placeholder="Client Code, Phone"
-        />
-      </div>
+      <PageHeader title="Active Clients" />
+
       {/* Client Card */}
       {data?.result?.map((client) => {
         return (
@@ -125,4 +115,4 @@ const ViewClients = () => {
   );
 };
 
-export default ViewClients;
+export default ActiveClients;
