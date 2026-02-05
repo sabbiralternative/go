@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { API } from "../../api";
@@ -10,8 +10,7 @@ import assets from "../../assets";
 const Login = () => {
   const dispatch = useDispatch();
   const [disabled, setDisabled] = useState(false);
-  // const [showPassword, setShowPassword] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
@@ -83,16 +82,11 @@ const Login = () => {
           }
         } else {
           setDisabled(false);
-          setErrorMessage(data?.error?.status?.[0]?.description);
+          toast.error(data?.error?.status?.[0]?.description);
         }
       });
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      setErrorMessage("");
-    }, 3000);
-  }, [errorMessage]);
   return (
     <div className="login-body">
       <form onSubmit={handleSubmit(onSubmit)} className="login-container">
@@ -118,13 +112,18 @@ const Login = () => {
             {...register("password", {
               required: true,
             })}
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="********"
           />
-          <i className="fa-solid fa-eye" />
+          <i
+            onClick={() => setShowPassword((prev) => !prev)}
+            className={`fa-solid ${showPassword ? "fa-eye" : "fa-eye-slash"}`}
+          />
         </div>
         {/* Login Button */}
-        <button className="login-btn">Login</button>
+        <button disabled={disabled} className="login-btn">
+          Login
+        </button>
       </form>
     </div>
   );
