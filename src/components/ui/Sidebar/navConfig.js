@@ -58,7 +58,7 @@ export const getNavItems = (permissions, adminRole, setters) => {
       children: [
         {
           label: "View Clients",
-          href: "/view-client",
+          href: "/view-clients",
           show: true,
         },
         {

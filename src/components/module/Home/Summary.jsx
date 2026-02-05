@@ -63,10 +63,10 @@ const Summary = () => {
     return () => clearInterval(interval);
   }, []);
   return (
-    <section className="summary" style={{ background: "#fff" }}>
+    <section className="summary">
       <p className="date">{time} IST</p>
 
-      <div className="summary-card">
+      <div className="summary-card" style={{ background: "#fff" }}>
         <div
           style={{
             display: "block",

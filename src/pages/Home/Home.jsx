@@ -2,11 +2,13 @@ import { Fragment } from "react";
 import Summary from "../../components/module/Home/Summary";
 import { usePermission } from "../../hooks/use-permission";
 import { Permission } from "../../constant/constant";
+import Header from "../../components/ui/Header/Header";
 
 const Home = () => {
   const { permissions } = usePermission();
   return (
     <Fragment>
+      <Header />
       <section className="profile" />
       {permissions.includes(Permission.dashboard) && <Summary />}
 

@@ -1,6 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import SidebarMenu from "./SidebarMenu";
-import { setShowLeftSidebar } from "../../../redux/features/global/globalSlice";
+import {
+  setShowChangePasswordModal,
+  setShowLeftSidebar,
+} from "../../../redux/features/global/globalSlice";
 import ModalWrapper from "../../modal/ModalWrapper/ModalWrapper";
 import { logout } from "../../../redux/features/auth/authSlice";
 
@@ -34,7 +37,13 @@ const Sidebar = () => {
         </div>
         <SidebarMenu />
         <div className="sidebar-footer">
-          <button className="footer-btn">
+          <button
+            onClick={() => {
+              dispatch(setShowChangePasswordModal(true));
+              closeModal();
+            }}
+            className="footer-btn"
+          >
             <i className="fa-solid fa-key" />
             Change Password
           </button>

@@ -8,7 +8,11 @@ const ModalWrapper = ({ children, onClose }) => {
     onClose();
   });
 
-  return <div ref={ref}>{children}</div>;
+  return (
+    <div style={{ width: "100%" }} ref={ref}>
+      {children}
+    </div>
+  );
 };
 
 export default ModalWrapper;
