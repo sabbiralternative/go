@@ -1,9 +1,7 @@
 import { useUser } from "../../../hooks/use-user";
 import { useEffect, useRef, useState } from "react";
-import { usePermission } from "../../../hooks/use-permission";
 import { useBalanceQuery } from "../../../hooks/balance";
 import moment from "moment";
-import Loader from "../../shared/Loader/Loader";
 import useGetDWCountQuery from "../../../hooks/dwCount";
 import assets from "../../../assets";
 
@@ -19,12 +17,7 @@ const Summary = () => {
   //   const today = new Date();
   const { user } = useUser();
   const [date, setDate] = useState(new Date());
-  const { permissions } = usePermission();
-  const {
-    data: balanceData,
-    isLoading,
-    isPending,
-  } = useBalanceQuery({
+  const { data: balanceData } = useBalanceQuery({
     date: moment(date).format("YYYY-MM-DD"),
     user_id: user?.user_id,
     role: user?.role,
@@ -72,85 +65,67 @@ const Summary = () => {
   return (
     <section className="summary">
       <p className="date">{time} IST</p>
+
       <div className="summary-card">
-        <div>
-          <span>Upper Level</span>
-          <strong>
-            {" "}
-            {isLoading || isPending ? <Loader /> : balanceData?.upperLevel}
-          </strong>
-        </div>
-        <div>
-          <span>Total Client Balance</span>
-          <strong>
-            {" "}
-            {isLoading || isPending ? (
-              <Loader />
-            ) : (
-              balanceData?.downLevelOccupyBalance
-            )}
-          </strong>
-        </div>
-        <div>
-          <span>Available Balance</span>
-          <strong>
-            {isLoading || isPending ? (
-              <Loader />
-            ) : (
-              balanceData?.availableBalance ||
-              (balanceData?.availableBalance == 0 &&
-                balanceData?.availableBalance?.toFixed(2))
-            )}
-          </strong>
-        </div>
-        <div>
-          <span>Total Master Balance</span>
-          <strong>
-            {isLoading || isPending ? (
-              <Loader />
-            ) : (
-              balanceData?.totalMasterBalance
-            )}
-          </strong>
-        </div>
-        <div>
-          <span>New Users Today</span>
-          <strong>
-            {isLoading || isPending ? <Loader /> : balanceData?.usersToday}
-          </strong>
-        </div>
-        <div>
-          <span>Total Deposit Today</span>
-          <strong>
-            {" "}
-            {isLoading || isPending ? <Loader /> : balanceData?.depositToday}
-          </strong>
-        </div>
-        <div>
-          <span>Total Withdraw Today</span>
-          <strong>
-            {" "}
-            {isLoading || isPending ? <Loader /> : balanceData?.withdrawToday}
-          </strong>
-        </div>
-        <div>
-          <span>P/L Today</span>
-          <strong
-            style={{
-              color: `${defineBalanceColor(balanceData?.pnlToday)}`,
-            }}
-          >
-            {" "}
-            {isLoading || isPending ? <Loader /> : balanceData?.pnlToday}
-          </strong>
-        </div>
-        <div>
-          <span> Pending Dep.</span>
-          <strong> {depositCount}</strong>
-        </div>
-        <div>
-          <span> Pending WD.</span>
-          <strong> {withdrawCount}</strong>
+        <div
+          style={{
+            display: "block",
+            borderRadius: "8px",
+            backgroundColor: "#E7E7E7",
+            padding: "10px 15px",
+          }}
+        >
+          <div>
+            <span>Upper Level</span>
+            <strong> {balanceData?.upperLevel}</strong>
+          </div>
+          <div>
+            <span>Total Client Balance</span>
+            <strong> {balanceData?.downLevelOccupyBalance}</strong>
+          </div>
+          <div>
+            <span>Available Balance</span>
+            <strong>
+              {balanceData?.availableBalance ||
+                (balanceData?.availableBalance == 0 &&
+                  balanceData?.availableBalance?.toFixed(2))}
+            </strong>
+          </div>
+          <div>
+            <span>Total Master Balance</span>
+            <strong>{balanceData?.totalMasterBalance}</strong>
+          </div>
+          <div>
+            <span>New Users Today</span>
+            <strong>{balanceData?.usersToday}</strong>
+          </div>
+          <div>
+            <span>Total Deposit Today</span>
+            <strong> {balanceData?.depositToday}</strong>
+          </div>
+          <div>
+            <span>Total Withdraw Today</span>
+            <strong> {balanceData?.withdrawToday}</strong>
+          </div>
+          <div>
+            <span>P/L Today</span>
+            <strong
+              style={{
+                color: `${defineBalanceColor(balanceData?.pnlToday)}`,
+              }}
+            >
+              {" "}
+              {balanceData?.pnlToday}
+            </strong>
+          </div>
+          <div>
+            <span> Pending Dep.</span>
+            <strong> {depositCount}</strong>
+          </div>
+          <div>
+            <span> Pending WD.</span>
+            <strong> {withdrawCount}</strong>
+          </div>
         </div>
       </div>
     </section>

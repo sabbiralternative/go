@@ -1,11 +1,15 @@
 import { Fragment } from "react";
 import Summary from "../../components/module/Home/Summary";
+import { usePermission } from "../../hooks/use-permission";
+import { Permission } from "../../constant/constant";
 
 const Home = () => {
+  const { permissions } = usePermission();
   return (
     <Fragment>
       <section className="profile" />
-      <Summary />
+      {permissions.includes(Permission.dashboard) && <Summary />}
+
       <section className="grid">
         <div className="card">
           <i className="fas fa-chart-pie" />

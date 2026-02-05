@@ -2,12 +2,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
- font-family: 'Lato', sans-serif;
- 
+  font-family: "Lato", sans-serif;
 }
 
 body {
-    font-size: 10px;
+  font-size: 10px;
   background: #ececec;
   color: #111;
 }
@@ -96,7 +95,7 @@ body {
   border-radius: 8px;
   text-align: center;
   font-weight: 600;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
 
@@ -112,8 +111,6 @@ body {
     grid-template-columns: repeat(4, 1fr);
   }
 }
-
-
 
 /* =========================
    LOGIN PAGE STYLES
@@ -159,15 +156,13 @@ body {
 .form-group input {
   width: 100%;
   height: 40px;
-    border-radius: 8px;
+  border-radius: 8px;
   border: none;
   outline: none;
   padding: 10px;
   font-size: 10px;
   font-weight: 400;
   background: #ffffff;
-
-
 }
 
 /* Password eye icon */
@@ -209,9 +204,6 @@ body {
     margin-top: -4rem;
   }
 }
-
-
-
 
 /* Header */
 .header {
@@ -262,7 +254,7 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
-  padding-bottom:8px;
+  padding-bottom: 8px;
   border-bottom: 1px solid #ededed;
 }
 
@@ -311,4 +303,113 @@ body {
 
 .actions button.disabled {
   background: #9a9a9a;
+}
+/* sidebar start */
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 78%;
+  height: 100vh;
+  background: linear-gradient(#1c1c1c, #0f0f0f);
+  color: white;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.sidebar-header {
+  padding: 16px;
+  border-bottom: 1px solid #333;
+  position: relative;
+}
+
+.logo-box {
+  width: 56px;
+  height: 56px;
+  background: #0b1d5c;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.brand-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.brand-link {
+  color: #3aa3ff;
+  text-decoration: underline;
+  font-size: 10px;
+}
+
+.sidebar-icons {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  gap: 14px;
+}
+
+.sidebar-icons i {
+  font-size: 18px;
+}
+
+/* Menu */
+.sidebar-menu {
+  padding: 10px 0;
+  flex: 1;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  color: #eaeaea;
+}
+
+.menu-item i {
+  font-size: 16px;
+}
+
+.menu-item span {
+  flex: 1;
+  font-size: 12px;
+}
+
+.menu-item .ph-caret-right {
+  color: #777;
+}
+
+/* Footer */
+.sidebar-footer {
+  padding: 16px;
+  background-color: #000;
+  border-top: 1px solid #333;
+}
+
+.footer-btn {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid #555;
+  border-radius: 12px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-size: 12px;
+}
+
+.footer-btn.logout {
+  border-color: #444;
 }
