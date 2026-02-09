@@ -24,19 +24,6 @@ div:where(.swal2-container) .swal2-html-container {
   background-color: #f4bacf;
 }
 
-.rs-input {
-  background-color: rgb(40, 49, 68) !important;
-  color: #8894ab !important;
-}
-.rs-input-group.rs-input-group-inside {
-  background-color: rgb(40, 49, 68) !important;
-  border: 1px solid #546990 !important;
-  color: #8894ab !important;
-}
-.rs-picker-popup {
-  background-color: #283144 !important;
-}
-
 /* Loader start*/
 
 .animate-spin {
@@ -120,4 +107,52 @@ div:where(.swal2-container) .swal2-html-container {
 
 .rs-picker-popup {
   z-index: 99999999999 !important;
+}
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: #f0f0f0;
+  outline: none;
+  font-size: 10px;
+}
+
+.flex-end {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  width: 100%;
+}
+
+.rs-pagination-btn {
+  color: black !important;
+}
+.APPROVED {
+  color: #39da8a !important;
+}
+
+.PENDING {
+  color: #fdac41 !important;
+}
+.REJECTED {
+  color: #ff5b5c !important;
+}
+
+.level-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 12px;
+}
+
+.level-table thead,
+.level-table tbody,
+.level-table tfoot,
+.level-table tr,
+.level-table td,
+.level-table th {
+  border-width: 1px;
+  border-color: #36445d;
+  padding: 10px;
 }

@@ -15,6 +15,13 @@ import PremiumClients from "../pages/Clients/PremiumClients";
 import ActiveClients from "../pages/Clients/ActiveClients";
 import ViewBranches from "../pages/Branches/ViewBranches";
 import ViewSuperBranches from "../pages/Branches/ViewSuperBranches";
+import PendingDeposit from "../pages/Deposit/PendingDeposit";
+import CompletedDeposit from "../pages/Deposit/CompletedDeposit";
+import RejectedDeposit from "../pages/Deposit/RejectedDeposit";
+import UTRSearch from "../pages/Deposit/UTRSearch";
+import PendingWithdraw from "../pages/Withdraw/PendingWithdraw";
+import CompletedWithdraw from "../pages/Withdraw/CompletedWithdraw";
+import RejectedWithdraw from "../pages/Withdraw/RejectedWithdraw";
 
 export const router = createBrowserRouter(
   [
@@ -78,6 +85,34 @@ export const router = createBrowserRouter(
         {
           path: "/view-super-branch",
           element: <ViewSuperBranches />,
+        },
+        {
+          path: "/pending-deposit",
+          element: <PendingDeposit />,
+        },
+        {
+          path: "/completed-deposit",
+          element: <CompletedDeposit />,
+        },
+        {
+          path: "/rejected-deposit",
+          element: <RejectedDeposit />,
+        },
+        {
+          path: "/utr-search",
+          element: <UTRSearch />,
+        },
+        {
+          path: "/pending-withdraw",
+          element: <PendingWithdraw />,
+        },
+        {
+          path: "/completed-withdraw",
+          element: <CompletedWithdraw />,
+        },
+        {
+          path: "/rejected-withdraw",
+          element: <RejectedWithdraw />,
         },
       ],
     },

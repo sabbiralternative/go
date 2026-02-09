@@ -486,3 +486,29 @@ body {
   border-radius: 8px;
   font-size: 14px;
 }
+
+.btn {
+  width: 100%;
+  padding: 10px;
+  background: #111;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 10px;
+}
+
+.btn-xs {
+  font-size: 9px !important;
+  border-radius: 4px !important;
+  padding: 8px !important;
+}
+
+.rs-input {
+  background-color: #f0f0f0 !important;
+  color: rgba(0, 0, 0, 0.809) !important;
+}
+.rs-input-group.rs-input-group-inside {
+  background-color: #f0f0f0 !important;
+  border: 1px solid transparent !important;
+  color: rgba(0, 0, 0, 0.809) !important;
+}

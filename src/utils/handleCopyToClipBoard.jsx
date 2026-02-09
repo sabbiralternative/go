@@ -1,6 +1,7 @@
 import copy from "copy-to-clipboard";
+import toast from "react-hot-toast";
 
-export const handleCopyToClipBoard = (text, setMessage) => {
+export const handleCopyToClipBoard = (text) => {
   copy(text);
-  setMessage('Copied to clipboard.');
+  toast.success("Copied to clipboard.");
 };
