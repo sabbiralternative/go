@@ -156,3 +156,9 @@ select {
   border-color: #36445d;
   padding: 10px;
 }
+.Back {
+  background-color: #a7d0eb !important;
+}
+.Lay {
+  background-color: #f4bacf !important;
+}

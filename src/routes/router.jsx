@@ -22,6 +22,9 @@ import UTRSearch from "../pages/Deposit/UTRSearch";
 import PendingWithdraw from "../pages/Withdraw/PendingWithdraw";
 import CompletedWithdraw from "../pages/Withdraw/CompletedWithdraw";
 import RejectedWithdraw from "../pages/Withdraw/RejectedWithdraw";
+import ViewPaymentMethods from "../pages/Payments/ViewPaymentMethods";
+import CurrentBets from "../pages/Exposure/CurrentBets";
+import ViewStaff from "../pages/Staff/ViewStaff";
 
 export const router = createBrowserRouter(
   [
@@ -113,6 +116,18 @@ export const router = createBrowserRouter(
         {
           path: "/rejected-withdraw",
           element: <RejectedWithdraw />,
+        },
+        {
+          path: "/view-payment-method",
+          element: <ViewPaymentMethods />,
+        },
+        {
+          path: "/current-bets",
+          element: <CurrentBets />,
+        },
+        {
+          path: "/view-staff",
+          element: <ViewStaff />,
         },
       ],
     },
