@@ -293,9 +293,9 @@ body {
 
 .actions button {
   flex: 1;
-  padding: 10px 0;
-  background: #111;
-  color: white;
+  /* padding: 10px 0; */
+  /* background: #111;
+  color: white; */
   border: none;
   font-size: 12px;
   border-radius: 8px;

@@ -25,6 +25,22 @@ import RejectedWithdraw from "../pages/Withdraw/RejectedWithdraw";
 import ViewPaymentMethods from "../pages/Payments/ViewPaymentMethods";
 import CurrentBets from "../pages/Exposure/CurrentBets";
 import ViewStaff from "../pages/Staff/ViewStaff";
+import ViewAffiliate from "../pages/Affiliate/ViewAffiliate";
+import ViewAffiliateClient from "../pages/Affiliate/ViewAffiliateClient";
+import ViewAffiliateDeposit from "../pages/Affiliate/ViewAffiliateDeposit";
+import ViewAffiliateWithdraw from "../pages/Affiliate/ViewAffiliateWithdraw";
+import ViewBanner from "../pages/Settings/ViewBanner";
+import ViewNotification from "../pages/Settings/ViewNotification";
+import PendingComplaints from "../pages/Complaints/PendingComplaints";
+import ResolvedComplaints from "../pages/Complaints/ResolvedComplaints";
+import ViewBonus from "../pages/Bonus/ViewBonus";
+import ViewLossBackBonus from "../pages/Bonus/ViewLossBackBonus";
+import LossBackBonusReport from "../pages/Bonus/LossBackBonusReport";
+import PendingBonus from "../pages/Bonus/PendingBonus";
+import RejectedBonus from "../pages/Bonus/RejectedBonus";
+import CompletedBonus from "../pages/Bonus/CompletedBonus";
+import ClientReport from "../pages/Report/ClientReport";
+import DepositReport from "../pages/Report/DepositReport";
 
 export const router = createBrowserRouter(
   [
@@ -128,6 +144,70 @@ export const router = createBrowserRouter(
         {
           path: "/view-staff",
           element: <ViewStaff />,
+        },
+        {
+          path: "/view-affiliate",
+          element: <ViewAffiliate />,
+        },
+        {
+          path: "/view-affiliate-client",
+          element: <ViewAffiliateClient />,
+        },
+        {
+          path: "/view-affiliate-deposit",
+          element: <ViewAffiliateDeposit />,
+        },
+        {
+          path: "/view-affiliate-withdraw",
+          element: <ViewAffiliateWithdraw />,
+        },
+        {
+          path: "/view-banner",
+          element: <ViewBanner />,
+        },
+        {
+          path: "/view-notification",
+          element: <ViewNotification />,
+        },
+        {
+          path: "/pending-complaints",
+          element: <PendingComplaints />,
+        },
+        {
+          path: "/resolved-complaints",
+          element: <ResolvedComplaints />,
+        },
+        {
+          path: "/view-bonus",
+          element: <ViewBonus />,
+        },
+        {
+          path: "/view-lossback-bonus",
+          element: <ViewLossBackBonus />,
+        },
+        {
+          path: "/lossback-bonus-report",
+          element: <LossBackBonusReport />,
+        },
+        {
+          path: "/pending-bonus",
+          element: <PendingBonus />,
+        },
+        {
+          path: "/rejected-bonus",
+          element: <RejectedBonus />,
+        },
+        {
+          path: "/completed-bonus",
+          element: <CompletedBonus />,
+        },
+        {
+          path: "/client-report",
+          element: <ClientReport />,
+        },
+        {
+          path: "/deposit-report",
+          element: <DepositReport />,
         },
       ],
     },

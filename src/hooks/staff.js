@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { AxiosSecure } from "../../../lib/AxiosSecure";
-import { API } from "../../../api";
+import { AxiosSecure } from "../lib/AxiosSecure";
+import { API } from "../api";
 
 export const useCheckerMutation = () => {
   return useMutation({

@@ -2,15 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import { API } from "../api";
 import { AxiosSecure } from "../lib/AxiosSecure";
 
-const useComplaintsQuery = (payload) => {
+export const useBonusQuery = (payload, time) => {
   return useQuery({
-    queryKey: ["complaints", payload],
+    queryKey: ["bonus", payload],
     queryFn: async () => {
-      const { data } = await AxiosSecure.post(API.complaint, payload);
+      const { data } = await AxiosSecure.post(API.bonus, payload);
       return data;
     },
     gcTime: 0,
+    refetchInterval: time ? time : null,
   });
 };
-
-export default useComplaintsQuery;

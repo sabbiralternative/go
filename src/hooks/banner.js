@@ -2,15 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import { API } from "../api";
 import { AxiosSecure } from "../lib/AxiosSecure";
 
-const useComplaintsQuery = (payload) => {
+export const useBannerQuery = (payload) => {
   return useQuery({
-    queryKey: ["complaints", payload],
+    queryKey: ["banner", payload],
     queryFn: async () => {
-      const { data } = await AxiosSecure.post(API.complaint, payload);
+      const { data } = await AxiosSecure.post(API.banner, payload);
       return data;
     },
     gcTime: 0,
   });
 };
-
-export default useComplaintsQuery;
