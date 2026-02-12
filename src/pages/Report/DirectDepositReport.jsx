@@ -9,36 +9,53 @@ import DefaultDateButton from "../../components/shared/DefaultDateButton/Default
 import { useNavigate } from "react-router-dom";
 import { useExportMutation } from "../../hooks/export";
 import { AdminRole } from "../../constant/constant";
+import { useGetIndexQuery } from "../../hooks";
+import ImagePreview from "../../components/modal/ImagePreview/ImagePreview";
 
-const ClientReport = () => {
+const DirectDepositReport = () => {
   const navigate = useNavigate();
   const { adminRole } = useSelector((state) => state.auth);
+  const [branchId, setBranchId] = useState(0);
+  const [image, setImage] = useState("");
   const [startDate, setStartDate] = useState(defaultDate(1));
   const [endDate, setEndDate] = useState(new Date());
-  const { mutate: exportMutation } = useExportCSVMutation();
-  const { mutate, data, isSuccess } = useExportMutation();
+  const { mutate: handleExport } = useExportCSVMutation();
+  const { mutate, data: depositData, isSuccess } = useExportMutation();
+  const { data: branches } = useGetIndexQuery({
+    type: "getBranches",
+  });
 
   const payload = {
-    type: "getClients",
+    type: "getDirectDeposit",
     fromDate: moment(startDate).format("YYYY-MM-DD"),
     toDate: moment(endDate).format("YYYY-MM-DD"),
     pagination: true,
   };
 
-  const getClientReport = async () => {
+  if (adminRole === AdminRole.admin_staff) {
+    payload.branch_id = branchId;
+  }
+
+  const getDepositReport = async () => {
     mutate(payload);
   };
 
-  const exportToExcel = async () => {
-    exportMutation(payload);
+  const handleExportData = async () => {
+    handleExport(payload);
   };
 
-  console.log(data);
+  let totalDeposit = 0;
+  if (depositData?.result) {
+    for (let data of depositData.result) {
+      totalDeposit += parseFloat(data?.amount);
+    }
+  }
 
   return (
     <Fragment>
+      {image && <ImagePreview image={image} setImage={setImage} />}
       {/* Header */}
-      <PageHeader title="Client Report" />
+      <PageHeader title="Deposit Report" />
       <div
         className="client-card"
         style={{
@@ -89,15 +106,46 @@ const ClientReport = () => {
           setStartDate={setStartDate}
           lastThreeMonth={true}
         />
+        {adminRole === AdminRole.admin_staff && (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "5px",
+              width: "100%",
+            }}
+          >
+            <div>Branch:</div>
+            <select
+              style={{ width: "100%" }}
+              defaultValue="0"
+              onChange={(e) => {
+                setBranchId(e.target.value);
+              }}
+              className="form-control"
+            >
+              <option disabled value="">
+                Branch
+              </option>
+              <option value="0">All Branch</option>
+              {branches?.result?.map((site) => (
+                <option key={site?.branch_id} value={site?.branch_id}>
+                  {site?.branch_name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
         <button
-          onClick={getClientReport}
+          onClick={getDepositReport}
           style={{ height: "38px" }}
           className="btn btn-primary"
         >
           View
         </button>
         <button
-          onClick={exportToExcel}
+          onClick={handleExportData}
           style={{ height: "38px" }}
           className="btn btn-primary"
         >
@@ -106,7 +154,7 @@ const ClientReport = () => {
       </div>
 
       {/* Card */}
-      {isSuccess && data?.result?.length > 0 && (
+      {isSuccess && depositData?.result?.length > 0 && (
         <Fragment>
           <p
             style={{
@@ -115,10 +163,22 @@ const ClientReport = () => {
             }}
           >
             {" "}
-            <span>Number of clients : {data?.result?.length}</span>
+            <span>
+              {" "}
+              Total Deposit :
+              {new Intl.NumberFormat("en-IN").format(totalDeposit)}
+            </span>
+          </p>
+          <p
+            style={{
+              marginTop: "12px",
+              marginLeft: "12px",
+            }}
+          >
+            <span>Deposit Count: {depositData?.result?.length}</span>
           </p>
 
-          {data?.result?.map((item, i) => {
+          {depositData?.result?.map((item, i) => {
             return (
               <div key={i} className="client-card">
                 <div className="card-top">
@@ -138,9 +198,10 @@ const ClientReport = () => {
                     {item?.userId}
                   </span>
                 </div>
+
                 <div className="row">
-                  <span>Login Name</span>
-                  <span> {item?.loginname}</span>
+                  <span>Branch Name</span>
+                  <span> {item?.branch_name}</span>
                 </div>
                 {(adminRole === AdminRole.hyper_master ||
                   adminRole === AdminRole.admin_master) && (
@@ -151,12 +212,31 @@ const ClientReport = () => {
                 )}
 
                 <div className="row">
-                  <span>Registration Date</span>
-                  <span> {item?.registrationDate}</span>
+                  <span>Amount</span>
+                  <span> {item?.amount}</span>
+                </div>
+
+                <div className="row">
+                  <span>Approval Time</span>
+                  <span> {item?.date_modified}</span>
+                </div>
+
+                <div className="row">
+                  <span>Remark</span>
+                  <span> {item?.remark}</span>
                 </div>
                 <div className="row">
-                  <span>Credit Limit</span>
-                  <span> {item?.credit_limit}</span>
+                  <span>Status</span>
+                  <span
+                    className={`badge ${
+                      item?.status == "APPROVED"
+                        ? "bg-label-primary"
+                        : "bg-label-warning"
+                    }`}
+                  >
+                    {" "}
+                    {item?.status}
+                  </span>
                 </div>
               </div>
             );
@@ -164,7 +244,7 @@ const ClientReport = () => {
         </Fragment>
       )}
 
-      {isSuccess && data?.result?.length === 0 && (
+      {isSuccess && depositData?.result?.length === 0 && (
         <div className="client-card">
           <p style={{ fontSize: "12px" }}>
             {" "}
@@ -176,4 +256,4 @@ const ClientReport = () => {
   );
 };
 
-export default ClientReport;
+export default DirectDepositReport;

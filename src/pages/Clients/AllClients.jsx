@@ -8,7 +8,7 @@ import handleNavigateToWhatsApp from "../../utils/handleNavigateToWhatsApp";
 const AllClients = () => {
   const { adminRole } = useSelector((state) => state.auth);
 
-  const { data } = useViewClientsQuery({
+  const { data, isSuccess } = useViewClientsQuery({
     searchId: "allUsers",
     pagination: true,
   });
@@ -112,6 +112,12 @@ const AllClients = () => {
           </div>
         );
       })}
+
+      {isSuccess && data?.result?.length === 0 && (
+        <div className="client-card">
+          <p style={{ fontSize: "12px" }}> No data found.</p>
+        </div>
+      )}
     </Fragment>
   );
 };

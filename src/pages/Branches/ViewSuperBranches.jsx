@@ -7,7 +7,7 @@ import { handleSplitUserName } from "../../utils/handleSplitUserName";
 
 const ViewSuperBranches = () => {
   const { adminRole } = useSelector((state) => state.auth);
-  const { data } = useViewBranchesQuery({
+  const { data, isSuccess } = useViewBranchesQuery({
     branch_type: "super_branch",
     pagination: true,
   });
@@ -96,6 +96,12 @@ const ViewSuperBranches = () => {
           </div>
         );
       })}
+
+      {isSuccess && data?.result?.length === 0 && (
+        <div className="client-card">
+          <p style={{ fontSize: "12px" }}> No data found.</p>
+        </div>
+      )}
     </Fragment>
   );
 };

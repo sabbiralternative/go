@@ -1,0 +1,319 @@
+import { Fragment, useState } from "react";
+import PageHeader from "../../components/shared/PageHeader/PageHeader";
+import { useExportCSVMutation } from "../../hooks/exportCSV";
+import { useSelector } from "react-redux";
+import { defaultDate } from "../../utils/defaultDate";
+import moment from "moment";
+import { DatePicker, Pagination } from "rsuite";
+import DefaultDateButton from "../../components/shared/DefaultDateButton/DefaultDateButton";
+import { useNavigate } from "react-router-dom";
+import { useExportMutation } from "../../hooks/export";
+import { AdminRole } from "../../constant/constant";
+import { useGetIndexQuery } from "../../hooks";
+import ImagePreview from "../../components/modal/ImagePreview/ImagePreview";
+
+const ClientBranchChangeReport = () => {
+  const navigate = useNavigate();
+  const { adminRole } = useSelector((state) => state.auth);
+  const [branchId, setBranchId] = useState(0);
+  const [image, setImage] = useState("");
+  const [startDate, setStartDate] = useState(defaultDate(1));
+  const [endDate, setEndDate] = useState(new Date());
+  const { mutate: handleExport } = useExportCSVMutation();
+  const [activePage, setActivePage] = useState(1);
+  const { mutate, data: clientData, isSuccess } = useExportMutation();
+  const { data: branches } = useGetIndexQuery({
+    type: "getBranches",
+  });
+
+  const payload = {
+    type: "getClientTransfer",
+    fromDate: moment(startDate).format("YYYY-MM-DD"),
+    toDate: moment(endDate).format("YYYY-MM-DD"),
+    pagination: true,
+    page: activePage,
+  };
+
+  if (
+    adminRole === AdminRole.admin_staff ||
+    adminRole === AdminRole.hyper_master
+  ) {
+    payload.branch_id = branchId;
+  }
+
+  const getDepositReport = async () => {
+    mutate(payload);
+  };
+
+  const handleExportData = async () => {
+    handleExport(payload);
+  };
+  const meta = clientData?.pagination;
+
+  return (
+    <Fragment>
+      {image && <ImagePreview image={image} setImage={setImage} />}
+      {/* Header */}
+      <PageHeader title="Client Branch Change Report" />
+      <div
+        className="client-card"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "15px",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "end",
+            gap: "10px",
+            flexWrap: "wrap",
+          }}
+        >
+          <div style={{ width: "100%" }}>
+            <label htmlFor="flatpickr-range" className="form-label">
+              From Date
+            </label>
+            <DatePicker
+              style={{ width: "100%" }}
+              format="yyyy-MM-dd"
+              editable
+              onChange={(date) => setStartDate(date)}
+              value={startDate}
+              block
+            />
+          </div>
+          <div style={{ width: "100%" }}>
+            <label htmlFor="flatpickr-range" className="form-label">
+              To Date
+            </label>
+            <DatePicker
+              style={{ width: "100%" }}
+              format="yyyy-MM-dd"
+              editable
+              onChange={(date) => setEndDate(date)}
+              value={endDate}
+              block
+            />
+          </div>
+          {(adminRole === AdminRole.admin_staff ||
+            adminRole === AdminRole.hyper_master) && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "5px",
+                width: "100%",
+              }}
+            >
+              <div>Branch:</div>
+              <select
+                style={{ width: "100%" }}
+                defaultValue="0"
+                onChange={(e) => {
+                  setBranchId(e.target.value);
+                  setActivePage(1);
+                }}
+                className="form-control"
+              >
+                <option disabled value="">
+                  Branch
+                </option>
+                <option value="0">All Branch</option>
+                {branches?.result?.map((site) => (
+                  <option key={site?.branch_id} value={site?.branch_id}>
+                    {site?.branch_name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+        </div>
+
+        <DefaultDateButton
+          setEndDate={setEndDate}
+          setStartDate={setStartDate}
+          lastThreeMonth={true}
+        />
+        {adminRole === AdminRole.admin_staff && (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "5px",
+              width: "100%",
+            }}
+          >
+            <div>Branch:</div>
+            <select
+              style={{ width: "100%" }}
+              defaultValue="0"
+              onChange={(e) => {
+                setBranchId(e.target.value);
+              }}
+              className="form-control"
+            >
+              <option disabled value="">
+                Branch
+              </option>
+              <option value="0">All Branch</option>
+              {branches?.result?.map((site) => (
+                <option key={site?.branch_id} value={site?.branch_id}>
+                  {site?.branch_name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
+        <button
+          onClick={getDepositReport}
+          style={{ height: "38px" }}
+          className="btn btn-primary"
+        >
+          View
+        </button>
+        <button
+          onClick={handleExportData}
+          style={{ height: "38px" }}
+          className="btn btn-primary"
+        >
+          Export
+        </button>
+      </div>
+      <div className="flex-end">
+        {meta && (
+          <Pagination
+            prev
+            next
+            size="md"
+            total={meta?.totalRecords}
+            limit={meta?.recordsPerPage}
+            activePage={activePage}
+            onChangePage={setActivePage}
+            maxButtons={5}
+            ellipsis
+            boundaryLinks
+          />
+        )}
+      </div>
+      {/* Card */}
+      {isSuccess && clientData?.result?.length > 0 && (
+        <Fragment>
+          <p
+            style={{
+              marginTop: "12px",
+              marginLeft: "12px",
+            }}
+          >
+            {" "}
+            <span> Number of clients : {meta?.totalRecords}</span>
+          </p>
+          <p
+            style={{
+              marginTop: "12px",
+              marginLeft: "12px",
+            }}
+          >
+            <span>Withdraw Count: {clientData?.result?.length}</span>
+          </p>
+
+          {clientData?.result?.map((item, i) => {
+            return (
+              <div key={i} className="client-card">
+                <div className="card-top">
+                  <strong>Key</strong>
+                  <span className="status">
+                    <i className="ph ph-lock-key-open" /> Value
+                  </span>
+                </div>
+                <div className="row">
+                  <span>User Id</span>
+                  <span
+                    onClick={() => {
+                      navigate(`/view-client?userId=${item?.userId}`);
+                    }}
+                    className="right"
+                  >
+                    {item?.userId}
+                  </span>
+                </div>
+
+                <div className="row">
+                  <span>Old Branch </span>
+                  <span> {item?.branch_name}</span>
+                </div>
+                {(adminRole === AdminRole.hyper_master ||
+                  adminRole === AdminRole.admin_master) && (
+                  <div className="row">
+                    <span>Mobile</span>
+                    <span>{item?.mobile}</span>
+                  </div>
+                )}
+
+                <div className="row">
+                  <span>Bank A/C</span>
+                  <span> {item?.bank_account_name}</span>
+                </div>
+
+                <div className="row">
+                  <span>Amount</span>
+                  <span> {item?.amount}</span>
+                </div>
+                <div className="row">
+                  <span>Bank Name</span>
+                  <span> {item?.bank_name}</span>
+                </div>
+
+                <div className="row">
+                  <span>Approval Time</span>
+                  <span> {item?.date_modified}</span>
+                </div>
+                <div className="row">
+                  <span>Account No</span>
+                  <span> {item?.account_number}</span>
+                </div>
+                <div className="row">
+                  <span>Ifsc</span>
+                  <span> {item?.ifsc}</span>
+                </div>
+                <div className="row">
+                  <span>Remark</span>
+                  <span> {item?.remark}</span>
+                </div>
+              </div>
+            );
+          })}
+        </Fragment>
+      )}
+      <div className="flex-end" style={{ marginBottom: "10px" }}>
+        {meta && (
+          <Pagination
+            prev
+            next
+            size="md"
+            total={meta?.totalRecords}
+            limit={meta?.recordsPerPage}
+            activePage={activePage}
+            onChangePage={setActivePage}
+            maxButtons={5}
+            ellipsis
+            boundaryLinks
+          />
+        )}
+      </div>
+      {isSuccess && clientData?.result?.length === 0 && (
+        <div className="client-card">
+          <p style={{ fontSize: "12px" }}>
+            {" "}
+            No data found for given date range.
+          </p>
+        </div>
+      )}
+    </Fragment>
+  );
+};
+
+export default ClientBranchChangeReport;

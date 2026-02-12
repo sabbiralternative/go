@@ -21,7 +21,7 @@ const ViewPaymentMethods = () => {
   if (adminRole === AdminRole.admin_staff) {
     payload.branch_id = branchId;
   }
-  const { data: paymentMethods } = usePaymentQuery(payload);
+  const { data: paymentMethods, isSuccess } = usePaymentQuery(payload);
 
   return (
     <Fragment>
@@ -132,6 +132,12 @@ const ViewPaymentMethods = () => {
           </div>
         );
       })}
+
+      {isSuccess && data?.result?.length === 0 && (
+        <div className="client-card">
+          <p style={{ fontSize: "12px" }}> No data found.</p>
+        </div>
+      )}
     </Fragment>
   );
 };

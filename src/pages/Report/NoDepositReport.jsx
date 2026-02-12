@@ -9,36 +9,37 @@ import DefaultDateButton from "../../components/shared/DefaultDateButton/Default
 import { useNavigate } from "react-router-dom";
 import { useExportMutation } from "../../hooks/export";
 import { AdminRole } from "../../constant/constant";
+import ImagePreview from "../../components/modal/ImagePreview/ImagePreview";
 
-const ClientReport = () => {
+const NoDepositReport = () => {
   const navigate = useNavigate();
   const { adminRole } = useSelector((state) => state.auth);
+  const [image, setImage] = useState("");
   const [startDate, setStartDate] = useState(defaultDate(1));
   const [endDate, setEndDate] = useState(new Date());
-  const { mutate: exportMutation } = useExportCSVMutation();
-  const { mutate, data, isSuccess } = useExportMutation();
+  const { mutate: handleExport } = useExportCSVMutation();
+  const { mutate, data: depositData, isSuccess } = useExportMutation();
 
   const payload = {
-    type: "getClients",
+    type: "getND",
     fromDate: moment(startDate).format("YYYY-MM-DD"),
     toDate: moment(endDate).format("YYYY-MM-DD"),
     pagination: true,
   };
 
-  const getClientReport = async () => {
+  const getDepositReport = async () => {
     mutate(payload);
   };
 
-  const exportToExcel = async () => {
-    exportMutation(payload);
+  const handleExportData = async () => {
+    handleExport(payload);
   };
-
-  console.log(data);
 
   return (
     <Fragment>
+      {image && <ImagePreview image={image} setImage={setImage} />}
       {/* Header */}
-      <PageHeader title="Client Report" />
+      <PageHeader title="LDT Report" />
       <div
         className="client-card"
         style={{
@@ -89,15 +90,16 @@ const ClientReport = () => {
           setStartDate={setStartDate}
           lastThreeMonth={true}
         />
+
         <button
-          onClick={getClientReport}
+          onClick={getDepositReport}
           style={{ height: "38px" }}
           className="btn btn-primary"
         >
           View
         </button>
         <button
-          onClick={exportToExcel}
+          onClick={handleExportData}
           style={{ height: "38px" }}
           className="btn btn-primary"
         >
@@ -106,7 +108,7 @@ const ClientReport = () => {
       </div>
 
       {/* Card */}
-      {isSuccess && data?.result?.length > 0 && (
+      {isSuccess && depositData?.result?.length > 0 && (
         <Fragment>
           <p
             style={{
@@ -115,10 +117,9 @@ const ClientReport = () => {
             }}
           >
             {" "}
-            <span>Number of clients : {data?.result?.length}</span>
+            <span>Number of clients : {depositData?.result?.length}</span>
           </p>
-
-          {data?.result?.map((item, i) => {
+          {depositData?.result?.map((item, i) => {
             return (
               <div key={i} className="client-card">
                 <div className="card-top">
@@ -142,6 +143,7 @@ const ClientReport = () => {
                   <span>Login Name</span>
                   <span> {item?.loginname}</span>
                 </div>
+
                 {(adminRole === AdminRole.hyper_master ||
                   adminRole === AdminRole.admin_master) && (
                   <div className="row">
@@ -164,7 +166,7 @@ const ClientReport = () => {
         </Fragment>
       )}
 
-      {isSuccess && data?.result?.length === 0 && (
+      {isSuccess && depositData?.result?.length === 0 && (
         <div className="client-card">
           <p style={{ fontSize: "12px" }}>
             {" "}
@@ -176,4 +178,4 @@ const ClientReport = () => {
   );
 };
 
-export default ClientReport;
+export default NoDepositReport;

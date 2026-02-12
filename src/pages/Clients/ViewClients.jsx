@@ -9,7 +9,7 @@ const ViewClients = () => {
   const { adminRole } = useSelector((state) => state.auth);
   const [clientId, setClientId] = useState(null);
 
-  const { data } = useViewClientsQuery({
+  const { data, isSuccess } = useViewClientsQuery({
     searchId: clientId,
     pagination: true,
   });
@@ -121,6 +121,12 @@ const ViewClients = () => {
           </div>
         );
       })}
+
+      {isSuccess && data?.result?.length === 0 && (
+        <div className="client-card">
+          <p style={{ fontSize: "12px" }}> No data found.</p>
+        </div>
+      )}
     </Fragment>
   );
 };

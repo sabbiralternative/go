@@ -41,6 +41,14 @@ import RejectedBonus from "../pages/Bonus/RejectedBonus";
 import CompletedBonus from "../pages/Bonus/CompletedBonus";
 import ClientReport from "../pages/Report/ClientReport";
 import DepositReport from "../pages/Report/DepositReport";
+import FirstDepositReport from "../pages/Report/FirstDepositReport";
+import LastDepositReport from "../pages/Report/LastDepositReport";
+import NoDepositReport from "../pages/Report/NoDepositReport";
+import WithdrawReport from "../pages/Report/WithdrawReport";
+import DirectDepositReport from "../pages/Report/DirectDepositReport";
+import DirectWithdrawReport from "../pages/Report/DirectWithdrawReport";
+import TransferStatement from "../pages/Report/TransferStatement";
+import ClientBranchChangeReport from "../pages/Report/ClientBranchChangeReport";
 
 export const router = createBrowserRouter(
   [
@@ -208,6 +216,38 @@ export const router = createBrowserRouter(
         {
           path: "/deposit-report",
           element: <DepositReport />,
+        },
+        {
+          path: "/1st-deposit-report",
+          element: <FirstDepositReport />,
+        },
+        {
+          path: "/last-deposit-report",
+          element: <LastDepositReport />,
+        },
+        {
+          path: "/no-deposit-report",
+          element: <NoDepositReport />,
+        },
+        {
+          path: "/withdraw-report",
+          element: <WithdrawReport />,
+        },
+        {
+          path: "/direct-deposit-report",
+          element: <DirectDepositReport />,
+        },
+        {
+          path: "/direct-withdraw-report",
+          element: <DirectWithdrawReport />,
+        },
+        {
+          path: "/transfer-statement",
+          element: <TransferStatement />,
+        },
+        {
+          path: "/client-branch-change-report",
+          element: <ClientBranchChangeReport />,
         },
       ],
     },
