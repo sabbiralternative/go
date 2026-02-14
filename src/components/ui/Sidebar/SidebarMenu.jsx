@@ -1,24 +1,22 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import useContextState from "../../../hooks/useContextState";
 import { Fragment, useState } from "react";
 import { usePermission } from "../../../hooks/use-permission";
 import { getNavItems } from "./navConfig";
-import { setShowLeftSidebar } from "../../../redux/features/global/globalSlice";
+import {
+  setShowLeftSidebar,
+  setShowAddBranchModal,
+  setShowAddBranchStaffModal,
+  setShowAddStaffModal,
+  setShowAddSuperBranchModal,
+  setShowDWLimitModal,
+  setShowSocialLinkModal,
+} from "../../../redux/features/global/globalSlice";
 
 const SidebarMenu = () => {
   const dispatch = useDispatch();
   const { adminRole } = useSelector((state) => state.auth);
   const navigate = useNavigate();
-  const {
-    setShowAddSuperBranch,
-    setShowAddBranch,
-    setShowSocialLink,
-    setShowAddStaff,
-    setShowAddBranchStaff,
-    setAddWhiteLabel,
-    setShowDWLimit,
-  } = useContextState();
   const [sidebarItem, setSidebarItem] = useState(null);
   const [childTabList, setChildTabList] = useState(null);
   const { permissions } = usePermission();
@@ -39,13 +37,12 @@ const SidebarMenu = () => {
   };
 
   const navItems = getNavItems(permissions, adminRole, {
-    setShowSocialLink,
-    setShowAddStaff,
-    setAddWhiteLabel,
-    setShowAddSuperBranch,
-    setShowAddBranch,
-    setShowAddBranchStaff,
-    setShowDWLimit,
+    setShowSocialLinkModal,
+    setShowAddStaffModal,
+    setShowAddSuperBranchModal,
+    setShowAddBranchModal,
+    setShowAddBranchStaffModal,
+    setShowDWLimitModal,
   });
 
   const handleRenderSidebar = (navItems) => {
@@ -142,7 +139,7 @@ const SidebarMenu = () => {
                               }}
                               key={child?.label}
                               onClick={() => {
-                                child?.setState(true);
+                                dispatch(child?.setState(true));
                                 dispatch(setShowLeftSidebar(false));
                               }}
                               className="menu-item"
@@ -222,7 +219,7 @@ const SidebarMenu = () => {
                                   }}
                                   key={child?.label}
                                   onClick={() => {
-                                    child?.setState(true);
+                                    dispatch(child?.setState(true));
                                     dispatch(setShowLeftSidebar(false));
                                   }}
                                   className="menu-item"
@@ -265,7 +262,7 @@ const SidebarMenu = () => {
                         style={{ padding: "10px 18px", marginLeft: "30px" }}
                         key={child?.label}
                         onClick={() => {
-                          child?.setState(true);
+                          dispatch(child?.setState(true));
                           dispatch(setShowLeftSidebar(false));
                         }}
                         className="menu-item"

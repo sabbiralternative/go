@@ -9,13 +9,12 @@ import { AdminRole } from "../../../constant/constant";
  */
 export const getNavItems = (permissions, adminRole, setters) => {
   const {
-    setShowSocialLink,
-    setShowAddStaff,
-    setAddWhiteLabel,
-    setShowAddSuperBranch,
-    setShowAddBranch,
-    setShowAddBranchStaff,
-    setShowDWLimit,
+    setShowSocialLinkModal,
+    setShowAddStaffModal,
+    setShowAddSuperBranchModal,
+    setShowAddBranchModal,
+    setShowAddBranchStaffModal,
+    setShowDWLimitModal,
   } = setters;
 
   return [
@@ -36,7 +35,7 @@ export const getNavItems = (permissions, adminRole, setters) => {
         },
         {
           label: "Add Branch",
-          setState: setShowAddBranch,
+          setState: setShowAddBranchModal,
           show: true,
         },
         {
@@ -46,7 +45,7 @@ export const getNavItems = (permissions, adminRole, setters) => {
         },
         {
           label: "Add Super Branch",
-          setState: setShowAddSuperBranch,
+          setState: setShowAddSuperBranchModal,
           show: true,
         },
       ],
@@ -306,12 +305,12 @@ export const getNavItems = (permissions, adminRole, setters) => {
             },
             {
               label: "Social Links",
-              setState: setShowSocialLink,
+              setState: setShowSocialLinkModal,
               show: true,
             },
             {
               label: "Update D/W Limit",
-              setState: setShowDWLimit,
+              setState: setShowDWLimitModal,
               show: true,
             },
             {
@@ -519,12 +518,12 @@ export const getNavItems = (permissions, adminRole, setters) => {
             adminRole === AdminRole.hyper_master
               ? "Add Admin Staff"
               : "Add Staff",
-          setState: setShowAddStaff,
+          setState: setShowAddStaffModal,
           show: true,
         },
         {
           label: "Add Branch Staff",
-          setState: setShowAddBranchStaff,
+          setState: setShowAddBranchStaffModal,
           show: adminRole === AdminRole.hyper_master,
         },
       ],
@@ -541,7 +540,7 @@ export const getNavItems = (permissions, adminRole, setters) => {
         },
         {
           label: "Add Whitelable",
-          setState: setAddWhiteLabel,
+          href: "/add-whitelable",
           show: true,
         },
       ],

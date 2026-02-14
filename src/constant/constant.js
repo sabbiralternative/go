@@ -37,3 +37,14 @@ export const Permission = {
   bonus: "bonus",
   password: "password",
 };
+
+export const ModalNames = {
+  deposit: "deposit",
+  withdraw: "withdraw",
+  pnl: "pnl",
+  changePassword: "changePassword",
+  changeStatus: "changeStatus",
+  creditReference: "creditReference",
+  whatsapp: "whatsapp",
+  dashboardBalance: "dashboardBalance",
+};

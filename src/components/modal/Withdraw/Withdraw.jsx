@@ -5,11 +5,8 @@ import GoForm from "../../shared/form/GoForm";
 import GoInput from "../../shared/form/GoInput";
 import { FormProvider, useForm } from "react-hook-form";
 import { useDownLineEditMutation } from "../../../hooks/downLineEdit";
-import { useState } from "react";
 
-const ChangePassword = ({ modal, setModal, refetch }) => {
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+const Withdraw = ({ modal, setModal, refetch }) => {
   const methods = useForm();
   const {
     handleSubmit,
@@ -24,15 +21,14 @@ const ChangePassword = ({ modal, setModal, refetch }) => {
     dispatch(setModal(null));
   };
 
-  const onSubmit = async ({ password, confirmPassword, mpassword }) => {
+  const onSubmit = async ({ amount, remark }) => {
     const payload = {
-      type: "password",
+      downlineId: modal?.username,
+      type: "withdraw",
+      amount,
+      remark,
       role: modal?.role,
       id: modal.id,
-      downlineId: modal?.username,
-      password,
-      confirmPassword,
-      mpassword,
     };
 
     downLineEdit(payload, {
@@ -55,7 +51,7 @@ const ChangePassword = ({ modal, setModal, refetch }) => {
           <GoForm onSubmit={handleSubmit(onSubmit)}>
             {/* Modal Header */}
             <div className="modal-header">
-              <span>Change Password</span>
+              <span>Withdraw</span>
               <span onClick={closeModal} className="close-icon">
                 ✕
               </span>
@@ -63,37 +59,18 @@ const ChangePassword = ({ modal, setModal, refetch }) => {
             {/* Modal Body */}
             <div className="modal-body">
               <GoInput
-                label="New Password"
-                type={showNewPassword ? "text" : "password"}
-                name="password"
+                label="Amount"
+                type="number"
+                name="amount"
                 required
-                placeholder="Enter New Password"
-              >
-                <i
-                  style={{ position: "absolute", right: "10px", top: "33px" }}
-                  onClick={() => setShowNewPassword((prev) => !prev)}
-                  className={`fa-solid ${showNewPassword ? "fa-eye" : "fa-eye-slash"}`}
-                />
-              </GoInput>
-              <GoInput
-                label="Confirm Password"
-                type={showConfirmPassword ? "text" : "password"}
-                name="confirmPassword"
-                required
-                placeholder="Enter Confirm Password"
-              >
-                <i
-                  style={{ position: "absolute", right: "10px", top: "33px" }}
-                  onClick={() => setShowConfirmPassword((prev) => !prev)}
-                  className={`fa-solid ${showConfirmPassword ? "fa-eye" : "fa-eye-slash"}`}
-                />
-              </GoInput>
+                placeholder="Enter Amount"
+              />
 
               <GoInput
-                label="Transaction Code"
-                name="mpassword"
+                label="Remark"
+                name="remark"
                 required
-                placeholder="Enter Transaction Code"
+                placeholder="Enter Remark"
               />
             </div>
             {/* Modal Footer */}
@@ -103,7 +80,7 @@ const ChangePassword = ({ modal, setModal, refetch }) => {
                 type="submit"
                 className="save-btn"
               >
-                {isSubmitting ? "Loading..." : "Save changes"}
+                {isSubmitting ? "Loading..." : "Deposit"}
               </button>
             </div>
           </GoForm>
@@ -113,4 +90,4 @@ const ChangePassword = ({ modal, setModal, refetch }) => {
   );
 };
 
-export default ChangePassword;
+export default Withdraw;

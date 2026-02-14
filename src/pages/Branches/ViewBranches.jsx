@@ -1,19 +1,66 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import PageHeader from "../../components/shared/PageHeader/PageHeader";
-import { AdminRole } from "../../constant/constant";
+import { AdminRole, ModalNames } from "../../constant/constant";
 import { useSelector } from "react-redux";
 import { useViewBranchesQuery } from "../../hooks/viewBranches";
 import { handleSplitUserName } from "../../utils/handleSplitUserName";
+import { useNavigate } from "react-router-dom";
+import Deposit from "../../components/modal/Deposit/Deposit";
+import Withdraw from "../../components/modal/Withdraw/Withdraw";
+import ChangePassword from "../../components/modal/ChangePassword/ChangePassword";
+import ChangeStatus from "../../components/modal/ChangeStatus/ChangeStatus";
+import CreditReference from "../../components/modal/CreditReference/CreditReference";
+import WhatsappNumber from "../../components/modal/WhatsappNumber/WhatsappNumber";
+import DashboardBalance from "../../components/modal/DashboardBalance/DashboardBalance";
 
 const ViewBranches = () => {
+  const navigate = useNavigate();
+  const [modal, setModal] = useState({
+    name: "",
+    username: "",
+    role: "",
+    id: "",
+    registrationStatus: "",
+  });
   const { adminRole } = useSelector((state) => state.auth);
-  const { data } = useViewBranchesQuery({
+  const { data, refetch } = useViewBranchesQuery({
     branch_type: "branch",
     pagination: true,
   });
 
+  const handleOpenModal = (branch, name) => {
+    setModal({
+      name,
+      username: branch?.username,
+      role: branch?.role,
+      id: branch?.id,
+      registrationStatus: branch?.registrationStatus,
+    });
+  };
+
   return (
     <Fragment>
+      {modal?.name === ModalNames.deposit && (
+        <Deposit modal={modal} setModal={setModal} refetch={refetch} />
+      )}
+      {modal?.name === ModalNames.withdraw && (
+        <Withdraw modal={modal} setModal={setModal} refetch={refetch} />
+      )}
+      {modal?.name === ModalNames.changePassword && (
+        <ChangePassword modal={modal} setModal={setModal} refetch={refetch} />
+      )}
+      {modal?.name === ModalNames.changeStatus && (
+        <ChangeStatus modal={modal} setModal={setModal} refetch={refetch} />
+      )}
+      {modal?.name === ModalNames.creditReference && (
+        <CreditReference modal={modal} setModal={setModal} refetch={refetch} />
+      )}
+      {modal?.name === ModalNames.whatsapp && (
+        <WhatsappNumber modal={modal} setModal={setModal} refetch={refetch} />
+      )}
+      {modal?.name === ModalNames.dashboardBalance && (
+        <DashboardBalance modal={modal} setModal={setModal} />
+      )}
       {/* Header */}
       <PageHeader title="Branches" />
 
@@ -89,10 +136,67 @@ const ViewBranches = () => {
               </div>
             )}
 
-            {/* <div className="actions">
-              <button>User bet history</button>
-              <button>Transactions</button>
-            </div> */}
+            <div
+              className="actions"
+              style={{
+                display: adminRole === AdminRole.admin_staff ? "none" : "flex",
+              }}
+            >
+              <button
+                className="btn btn-success"
+                onClick={() => handleOpenModal(branch, ModalNames.deposit)}
+              >
+                D
+              </button>
+              <button
+                className="btn btn-danger"
+                onClick={() => handleOpenModal(branch, ModalNames.withdraw)}
+              >
+                W
+              </button>
+              <button
+                className="btn btn-warning"
+                onClick={() => navigate(`/pnl?username=${branch?.username}`)}
+              >
+                PL
+              </button>
+              <button
+                className="btn btn-info"
+                onClick={() =>
+                  handleOpenModal(branch, ModalNames.changePassword)
+                }
+              >
+                P
+              </button>
+              <button
+                className="btn btn-dark"
+                onClick={() => handleOpenModal(branch, ModalNames.changeStatus)}
+              >
+                S
+              </button>
+              <button
+                onClick={() =>
+                  handleOpenModal(branch, ModalNames.creditReference)
+                }
+                className="btn btn-primary"
+              >
+                CR
+              </button>
+              <button
+                onClick={() => handleOpenModal(branch, ModalNames.whatsapp)}
+                className="btn btn-info"
+              >
+                WA
+              </button>
+              <button
+                onClick={() =>
+                  handleOpenModal(branch, ModalNames.dashboardBalance)
+                }
+                className="btn btn-warning"
+              >
+                DB
+              </button>
+            </div>
           </div>
         );
       })}
