@@ -91,7 +91,7 @@ const DirectWithdraw = ({ modal, setModal, refetchClient }) => {
         >
           {/* Modal Header */}
           <div className="modal-header">
-            <span>Deposit</span>
+            <span>Direct Withdraw</span>
             <span onClick={closeModal} className="close-icon">
               ✕
             </span>
