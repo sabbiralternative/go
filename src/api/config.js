@@ -9,7 +9,7 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
     .then((res) => {
       const data = res.data;
       if (data?.result) {
-        API.downineEditForm = data?.result?.endpoint?.downineEditForm;
+        API.downlineEditForm = data?.result?.endpoint?.downlineEditForm;
         API.exportCSV = data?.result?.endpoint?.exportCSV;
         API.auth = data?.result?.endpoint?.auth;
         API.index = data?.result?.endpoint?.index;

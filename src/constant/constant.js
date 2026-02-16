@@ -47,4 +47,6 @@ export const ModalNames = {
   creditReference: "creditReference",
   whatsapp: "whatsapp",
   dashboardBalance: "dashboardBalance",
+  clientDeposit: "clientDeposit",
+  directWithdraw: "directWithdraw",
 };

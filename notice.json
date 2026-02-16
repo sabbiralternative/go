@@ -94,7 +94,7 @@
       "export": "https://admin.api7.live/api/b2c/export",
       "notification": "https://admin.api7.live/api/b2c/notification",
       "loginReadOnly": "https://admin.api7.live/api/b2c/loginReadOnly",
-      "downineEditForm": "https://admin.api7.live/api/b2c/downlineEditForm",
+      "downlineEditForm": "https://admin.api7.live/api/b2c/downlineEditForm",
       "downLineEditForm": "https://admin.api7.live/api/downlineEditForm",
       "downLineEdit": "https://admin.api7.live/api/b2c/downlineEdit",
       "bonus": "https://admin.api7.live/api/b2c/bonus",

@@ -62,7 +62,7 @@ export const API = {
   export: "",
   transferStatement: "",
   loginReadOnly: "",
-  downineEditForm: "",
+  downlineEditForm: "",
   bonus: "",
   staff: "",
   whitelabel: "",
