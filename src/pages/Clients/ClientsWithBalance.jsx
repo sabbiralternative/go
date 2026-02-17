@@ -20,7 +20,7 @@ const ClientsWithBalance = () => {
       <PageHeader title="Clients With Balance" />
 
       {/* Client Card */}
-      {data?.result?.map((client) => {
+      {data?.result?.map((client, i) => {
         return (
           <div key={client?.userId} className="client-card">
             <div className="card-top">
@@ -106,7 +106,7 @@ const ClientsWithBalance = () => {
               <span>Reg. Date</span>
               <span>{client?.registrationDate}</span>
             </div>
-            <ClientAction client={client} refetchClient={refetch} />
+            <ClientAction client={client} refetchClient={refetch} index={i} />
           </div>
         );
       })}

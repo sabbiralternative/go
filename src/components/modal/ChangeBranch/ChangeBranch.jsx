@@ -1,55 +1,51 @@
-import { useDispatch } from "react-redux";
 import ModalWrapper from "../ModalWrapper/ModalWrapper";
 import toast from "react-hot-toast";
 import GoForm from "../../shared/form/GoForm";
-import GoInput from "../../shared/form/GoInput";
 import { FormProvider, useForm } from "react-hook-form";
 import {
   useDownLineEditMutation,
   useDownLineEditQuery,
 } from "../../../hooks/downLineEdit";
 
-const CreditReference = ({ modal, setModal, refetch }) => {
+import { useEffect, useState } from "react";
+
+const ChangeBranch = ({ modal, setModal, refetchClient }) => {
+  const [activeBranchId, setActiveBranchId] = useState(null);
+  const methods = useForm();
+  const { handleSubmit } = methods;
+
+  const closeModal = () => {
+    setModal(null);
+  };
+
   const payload = {
-    downlineId: modal?.username || modal?.downlineId,
-    type: "viewCreditReference",
+    type: "viewBranches",
     role: modal?.role,
     id: modal.id,
+    downlineId: modal?.username,
   };
-  const { data } = useDownLineEditQuery(payload);
-  const methods = useForm({
-    defaultValues: {
-      amount: data?.result?.creditReference,
-    },
-  });
-  const { handleSubmit, reset } = methods;
-
-  const dispatch = useDispatch();
   const {
     mutate: downLineEdit,
     isPending,
     isSuccess,
   } = useDownLineEditMutation();
+  const { data } = useDownLineEditQuery(payload);
 
-  const closeModal = () => {
-    dispatch(setModal(null));
-  };
-
-  const onSubmit = async ({ amount }) => {
+  const onSubmit = async () => {
     const payload = {
-      downlineId: modal?.username,
-      type: "updateCreditReference",
-      amount,
+      type: "changeBranch",
       role: modal?.role,
       id: modal.id,
+      downlineId: modal?.username,
+      branch_id: activeBranchId,
     };
 
     downLineEdit(payload, {
       onSuccess: (data) => {
         if (data?.success) {
           toast.success(data?.result?.message);
-          reset();
-          refetch();
+
+          refetchClient();
           closeModal();
         } else {
           toast.error(data?.error?.status?.[0]?.description);
@@ -58,9 +54,17 @@ const CreditReference = ({ modal, setModal, refetch }) => {
     });
   };
 
+  useEffect(() => {
+    if (data?.result?.branch?.length > 0) {
+      const findActive = data?.result?.branch?.find((br) => br?.active);
+      setActiveBranchId(findActive?.branch_id);
+    }
+  }, [data]);
+
   if (!data?.result) {
     return null;
   }
+
   return (
     <div className="modal-overlay">
       <ModalWrapper onClose={closeModal}>
@@ -68,29 +72,32 @@ const CreditReference = ({ modal, setModal, refetch }) => {
           <GoForm onSubmit={handleSubmit(onSubmit)}>
             {/* Modal Header */}
             <div className="modal-header">
-              <span> Credit Reference</span>
+              <span>Change Branch</span>
               <span onClick={closeModal} className="close-icon">
                 ✕
               </span>
             </div>
             {/* Modal Body */}
             <div className="modal-body">
-              <div style={{ position: "relative" }}>
-                <label> Username</label>
-                <input
-                  readOnly
-                  value={data?.result?.loginname}
-                  style={{ background: "transparent" }}
-                />
-              </div>
-
-              <GoInput
-                label="Amount"
-                type="number"
-                name="amount"
-                required
-                placeholder="Enter Amount"
-              />
+              {data?.result?.branch?.map((item) => (
+                <label
+                  key={item?.branch_id}
+                  style={{
+                    display: "flex",
+                    width: "fit-content",
+                    gap: "10px",
+                    marginBottom: "20px",
+                  }}
+                >
+                  <input
+                    checked={activeBranchId === item?.branch_id}
+                    style={{ width: "fit-content" }}
+                    type="radio"
+                    onChange={() => setActiveBranchId(item?.branch_id)}
+                  />
+                  {item?.branch_name}
+                </label>
+              ))}
             </div>
             {/* Modal Footer */}
             <div className="modal-footer">
@@ -99,7 +106,7 @@ const CreditReference = ({ modal, setModal, refetch }) => {
                 type="submit"
                 className="save-btn"
               >
-                {isPending && !isSuccess ? "Loading..." : "Update"}
+                {isPending && !isSuccess ? "Loading..." : "Save changes"}
               </button>
             </div>
           </GoForm>
@@ -109,4 +116,4 @@ const CreditReference = ({ modal, setModal, refetch }) => {
   );
 };
 
-export default CreditReference;
+export default ChangeBranch;

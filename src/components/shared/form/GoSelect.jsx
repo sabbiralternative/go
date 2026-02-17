@@ -6,13 +6,14 @@ export default function GoSelect({
   name,
   data,
   placeholder,
+  defaultValue = "",
 }) {
   const { register } = useFormContext();
 
   return (
     <div style={{ position: "relative" }}>
       <label> {label}</label>
-      <select {...register(name, { required })}>
+      <select defaultValue={defaultValue} {...register(name, { required })}>
         <option selected disabled value="">
           {placeholder}
         </option>

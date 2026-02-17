@@ -36,6 +36,7 @@ export const Permission = {
   directWithdraw: "directWithdraw",
   bonus: "bonus",
   password: "password",
+  change_branch: "change_branch",
 };
 
 export const ModalNames = {
@@ -49,4 +50,7 @@ export const ModalNames = {
   dashboardBalance: "dashboardBalance",
   clientDeposit: "clientDeposit",
   directWithdraw: "directWithdraw",
+  directDeposit: "directDeposit",
+  changeBranch: "changeBranch",
+  editWithdraw: "editWithdraw",
 };

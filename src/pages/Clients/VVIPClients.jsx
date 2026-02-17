@@ -4,10 +4,11 @@ import { useViewClientsQuery } from "../../hooks/viewClients";
 import { AdminRole } from "../../constant/constant";
 import { useSelector } from "react-redux";
 import handleNavigateToWhatsApp from "../../utils/handleNavigateToWhatsApp";
+import ClientAction from "../../components/shared/ClientAction/ClientAction";
 
 const VVIPClients = () => {
   const { adminRole } = useSelector((state) => state.auth);
-  const { data, isSuccess } = useViewClientsQuery({
+  const { data, isSuccess, refetch } = useViewClientsQuery({
     searchId: "vvipUsers",
     pagination: true,
   });
@@ -18,7 +19,7 @@ const VVIPClients = () => {
       <PageHeader title="VVIP Clients" />
 
       {/* Client Card */}
-      {data?.result?.map((client) => {
+      {data?.result?.map((client, index) => {
         return (
           <div key={client?.userId} className="client-card">
             <div className="card-top">
@@ -104,10 +105,11 @@ const VVIPClients = () => {
               <span>Reg. Date</span>
               <span>{client?.registrationDate}</span>
             </div>
-            {/* <div className="actions">
-              <button>User bet history</button>
-              <button>Transactions</button>
-            </div> */}
+            <ClientAction
+              client={client}
+              refetchClient={refetch}
+              index={index}
+            />
           </div>
         );
       })}

@@ -1297,3 +1297,18 @@ select {
   background-color: #4a3848 !important;
   color: #ff5b5c !important;
 }
+
+.client-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pl-withdraw {
+  color: #a5b00f !important;
+}
+.pl-deposit {
+  color: #098188 !important;
+}
+.text-danger {
+  color: #f44336;
+}

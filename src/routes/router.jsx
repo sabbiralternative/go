@@ -49,6 +49,9 @@ import DirectDepositReport from "../pages/Report/DirectDepositReport";
 import DirectWithdrawReport from "../pages/Report/DirectWithdrawReport";
 import TransferStatement from "../pages/Report/TransferStatement";
 import ClientBranchChangeReport from "../pages/Report/ClientBranchChangeReport";
+import AddClient from "../pages/Clients/AddClient";
+import PNL from "../pages/PNL/PNL";
+import ActivityLogs from "../pages/ActivityLogs/ActivityLogs";
 
 export const router = createBrowserRouter(
   [
@@ -65,6 +68,10 @@ export const router = createBrowserRouter(
           element: <ViewClients />,
         },
 
+        {
+          path: "/add-client",
+          element: <AddClient />,
+        },
         {
           path: "/clients-with-balance",
           element: <ClientsWithBalance />,
@@ -248,6 +255,14 @@ export const router = createBrowserRouter(
         {
           path: "/client-branch-change-report",
           element: <ClientBranchChangeReport />,
+        },
+        {
+          path: "/pnl",
+          element: <PNL />,
+        },
+        {
+          path: "/activity-logs",
+          element: <ActivityLogs />,
         },
       ],
     },

@@ -4,10 +4,11 @@ import { useViewClientsQuery } from "../../hooks/viewClients";
 import { AdminRole } from "../../constant/constant";
 import { useSelector } from "react-redux";
 import handleNavigateToWhatsApp from "../../utils/handleNavigateToWhatsApp";
+import ClientAction from "../../components/shared/ClientAction/ClientAction";
 
 const ActiveClients = () => {
   const { adminRole } = useSelector((state) => state.auth);
-  const { data } = useViewClientsQuery({
+  const { data, refetch } = useViewClientsQuery({
     searchId: "activeUsers",
     pagination: true,
   });
@@ -18,7 +19,7 @@ const ActiveClients = () => {
       <PageHeader title="Active Clients" />
 
       {/* Client Card */}
-      {data?.result?.map((client) => {
+      {data?.result?.map((client, index) => {
         return (
           <div key={client?.userId} className="client-card">
             <div className="card-top">
@@ -104,10 +105,11 @@ const ActiveClients = () => {
               <span>Reg. Date</span>
               <span>{client?.registrationDate}</span>
             </div>
-            {/* <div className="actions">
-              <button>User bet history</button>
-              <button>Transactions</button>
-            </div> */}
+            <ClientAction
+              client={client}
+              refetchClient={refetch}
+              index={index}
+            />
           </div>
         );
       })}
