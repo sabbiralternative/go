@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { FaEdit, FaRegCopy } from "react-icons/fa";
 import toast from "react-hot-toast";
 import EditWithdraw from "../../components/modal/EditWithdraw/EditWithdraw";
+import DepositReport from "../../components/modal/DepositReport/DepositReport";
 
 const PendingWithdraw = () => {
   const [modal, setModal] = useState({
@@ -90,10 +91,13 @@ const PendingWithdraw = () => {
 
   return (
     <Fragment>
+      {image && <ImagePreview image={image} setImage={setImage} />}
       {modal?.name === ModalNames.editWithdraw && (
         <EditWithdraw modal={modal} setModal={setModal} refetch={refetch} />
       )}
-      {image && <ImagePreview image={image} setImage={setImage} />}
+      {modal?.name === ModalNames.depositReport && (
+        <DepositReport modal={modal} setModal={setModal} />
+      )}
       {/* Header */}
       <PageHeader title="Pending Withdraw" />
       {(adminRole === AdminRole.branch_staff ||
@@ -345,7 +349,14 @@ const PendingWithdraw = () => {
               >
                 PL
               </button>
-              <button className="btn btn-info">DR</button>
+              <button
+                onClick={() =>
+                  handleOpenModal(withdraw, ModalNames.depositReport)
+                }
+                className="btn btn-info"
+              >
+                DR
+              </button>
             </div>
           </div>
         );

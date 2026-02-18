@@ -33,8 +33,6 @@ const ClientReport = () => {
     exportMutation(payload);
   };
 
-  console.log(data);
-
   return (
     <Fragment>
       {/* Header */}

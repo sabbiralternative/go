@@ -1,24 +1,46 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import PageHeader from "../../components/shared/PageHeader/PageHeader";
 import { useBonusQuery } from "../../hooks/bonus";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import { AdminRole, ModalNames } from "../../constant/constant";
+import UpdatePendingBonus from "../../components/modal/UpdatePendingBonus/UpdatePendingBonus";
+import { useSelector } from "react-redux";
 
 const PendingBonus = () => {
+  const { adminRole } = useSelector((state) => state.auth);
+  const [modal, setModal] = useState({
+    name: "",
+    bonus_statement_id: "",
+  });
   const navigate = useNavigate();
   const payload = {
     type: "viewBonusStatement",
     is_claimed: 2,
   };
-  const { data, isSuccess } = useBonusQuery(payload, 30000);
+  const { data, isSuccess, refetch } = useBonusQuery(payload, 30000);
   const formateDate = (date) => {
     if (date) {
       const formateDate = moment(date).format("DD-MM-YYYY, h:mm a");
       return formateDate;
     }
   };
+
+  const handleOpenModal = (bonus, name) => {
+    setModal({
+      name,
+      bonus_statement_id: bonus?.bonus_statement_id,
+    });
+  };
   return (
     <Fragment>
+      {modal?.name === ModalNames.updatePendingBonus && (
+        <UpdatePendingBonus
+          modal={modal}
+          setModal={setModal}
+          refetch={refetch}
+        />
+      )}
       {/* Header */}
       <PageHeader title="Pending Bonus" />
 
@@ -94,6 +116,21 @@ const PendingBonus = () => {
             <div className="row">
               <span>Expiry Date</span>
               <span> {formateDate(bonus?.expiry_date)}</span>
+            </div>
+            <div
+              className="actions"
+              style={{
+                display: adminRole === AdminRole.master ? "flex" : "none",
+              }}
+            >
+              <button
+                onClick={() =>
+                  handleOpenModal(bonus, ModalNames.updatePendingBonus)
+                }
+                className="btn btn-success"
+              >
+                E
+              </button>
             </div>
           </div>
         );

@@ -1,14 +1,25 @@
 import { Fragment, useState } from "react";
 import PageHeader from "../../components/shared/PageHeader/PageHeader";
-import { AdminRole } from "../../constant/constant";
+import { AdminRole, ModalNames } from "../../constant/constant";
 import { useSelector } from "react-redux";
 import { useGetIndexQuery } from "../../hooks";
-import { usePaymentQuery } from "../../hooks/payments";
+import { usePaymentMutation, usePaymentQuery } from "../../hooks/payments";
 import ImagePreview from "../../components/modal/ImagePreview/ImagePreview";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
+import EditPayment from "../../components/modal/EditPayment/EditPayment";
 
 const ViewPaymentMethods = () => {
+  const navigate = useNavigate();
+  const [modal, setModal] = useState({
+    name: "",
+    id: "",
+  });
   const { adminRole } = useSelector((state) => state.auth);
   const [branchId, setBranchId] = useState(0);
+  const { mutate: deletePaymentMethod } = usePaymentMutation();
   const { data } = useGetIndexQuery({
     type: "getBranches",
   });
@@ -21,11 +32,50 @@ const ViewPaymentMethods = () => {
   if (adminRole === AdminRole.admin_staff) {
     payload.branch_id = branchId;
   }
-  const { data: paymentMethods, isSuccess } = usePaymentQuery(payload);
+  const { data: paymentMethods, isSuccess, refetch } = usePaymentQuery(payload);
+
+  const handleOpenModal = (payment, name) => {
+    setModal({
+      name,
+      id: payment?.id,
+    });
+  };
+
+  const handleDeletePaymentMethod = async (paymentId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to delete this account!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const payload = {
+          type: "deletePayment",
+          paymentId,
+        };
+        deletePaymentMethod(payload, {
+          onSuccess: (data) => {
+            if (data?.success) {
+              refetch();
+              toast.success(data?.result?.message);
+            } else {
+              toast.error(data?.error?.status?.[0]?.description);
+            }
+          },
+        });
+      }
+    });
+  };
 
   return (
     <Fragment>
       {image && <ImagePreview image={image} setImage={setImage} />}
+      {modal?.name === ModalNames.editPaymentMethod && (
+        <EditPayment modal={modal} setModal={setModal} refetch={refetch} />
+      )}
       <PageHeader title="Payment Methods" />
       {adminRole === AdminRole.admin_staff && (
         <div
@@ -128,6 +178,37 @@ const ViewPaymentMethods = () => {
                 {" "}
                 {method?.userStatus === 1 ? "active" : "inactive"}
               </span>
+            </div>
+            <div className="actions">
+              {adminRole === AdminRole.admin_staff && (
+                <button
+                  onClick={() => navigate(`/view-payment-logs/${method?.id}`)}
+                  className="btn btn-success"
+                >
+                  <FaEdit />
+                </button>
+              )}
+
+              {adminRole !== AdminRole.admin_staff && (
+                <Fragment>
+                  <button
+                    onClick={() =>
+                      handleOpenModal(method, ModalNames.editPaymentMethod)
+                    }
+                    className="btn btn-success"
+                  >
+                    <FaEdit size={12} />
+                  </button>
+                  <button
+                    onClick={() => {
+                      handleDeletePaymentMethod(method?.id);
+                    }}
+                    className="btn btn-danger"
+                  >
+                    <FaTrash size={12} />
+                  </button>
+                </Fragment>
+              )}
             </div>
           </div>
         );

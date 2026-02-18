@@ -1,6 +1,6 @@
 import { Fragment, useState } from "react";
 import PageHeader from "../../components/shared/PageHeader/PageHeader";
-import { AdminRole } from "../../constant/constant";
+import { AdminRole, ModalNames } from "../../constant/constant";
 import { useSelector } from "react-redux";
 import { useGetIndexQuery } from "../../hooks";
 import { useUTRQuery } from "../../hooks/utr";
@@ -8,8 +8,14 @@ import { MdOutlineContentCopy } from "react-icons/md";
 import { handleCopyToClipBoard } from "../../utils/handleCopyToClipBoard";
 import { Pagination } from "rsuite";
 import ImagePreview from "../../components/modal/ImagePreview/ImagePreview";
+import { FaEdit } from "react-icons/fa";
+import EditDeposit from "../../components/modal/EditDeposit/EditDeposit";
 
 const PendingDeposit = () => {
+  const [modal, setModal] = useState({
+    name: "",
+    id: "",
+  });
   const [image, setImage] = useState("");
   const { adminRole } = useSelector((state) => state.auth);
   const [amountFrom, setAmountFrom] = useState(null);
@@ -36,11 +42,21 @@ const PendingDeposit = () => {
     payload.branch_id = branchId;
   }
 
-  const { data: pendingDeposit } = useUTRQuery(payload, 30000);
+  const { data: pendingDeposit, refetch } = useUTRQuery(payload, 30000);
   const meta = pendingDeposit?.pagination;
+
+  const handleOpenModal = (deposit, name) => {
+    setModal({
+      name,
+      id: deposit?.id,
+    });
+  };
 
   return (
     <Fragment>
+      {modal?.name === ModalNames.editDeposit && (
+        <EditDeposit modal={modal} setModal={setModal} refetch={refetch} />
+      )}
       {image && <ImagePreview image={image} setImage={setImage} />}
       {/* Header */}
       <PageHeader title="Pending Deposit" />
@@ -119,9 +135,9 @@ const PendingDeposit = () => {
         )}
       </div>
       {/* Client Card */}
-      {pendingDeposit?.result?.map((item) => {
+      {pendingDeposit?.result?.map((deposit) => {
         return (
-          <div key={item?.userId} className="client-card">
+          <div key={deposit?.userId} className="client-card">
             <div className="card-top">
               <strong>Key</strong>
               <span className="status">
@@ -130,11 +146,11 @@ const PendingDeposit = () => {
             </div>
             <div className="row">
               <span>Level</span>
-              <span className="right">{item?.level}</span>
+              <span className="right">{deposit?.level}</span>
             </div>
             <div className="row">
               <span>User Id</span>
-              <span>{item?.userId}</span>
+              <span>{deposit?.userId}</span>
             </div>
             {(adminRole === AdminRole.admin_staff ||
               adminRole === AdminRole.hyper_master ||
@@ -142,30 +158,30 @@ const PendingDeposit = () => {
               adminRole === AdminRole.branch_staff) && (
               <div className="row">
                 <span>Branch Name</span>
-                <span>{item?.branch_name}</span>
+                <span>{deposit?.branch_name}</span>
               </div>
             )}
 
             <div className="row">
               <span>Amount</span>
-              <span>{item?.amount}</span>
+              <span>{deposit?.amount}</span>
             </div>
             <div className="row">
               <span>UTR</span>
               <span>
-                {item?.utr}{" "}
+                {deposit?.utr}{" "}
                 <MdOutlineContentCopy
                   style={{ cursor: "pointer" }}
-                  onClick={() => handleCopyToClipBoard(item?.utr)}
+                  onClick={() => handleCopyToClipBoard(deposit?.utr)}
                 />
               </span>
             </div>
             <div className="row">
               <span>Slip</span>
-              {item?.image ? (
+              {deposit?.image ? (
                 <span
                   onClick={() => {
-                    setImage(item?.image);
+                    setImage(deposit?.image);
                   }}
                   style={{ color: "#346cee", cursor: "pointer" }}
                 >
@@ -178,33 +194,46 @@ const PendingDeposit = () => {
             <div className="row">
               <span>Type</span>
 
-              <span>{item?.type}</span>
+              <span>{deposit?.type}</span>
             </div>
             <div className="row">
               <span>Status</span>
 
-              <span className={item.status}>{item?.status}</span>
+              <span className={deposit.status}>{deposit?.status}</span>
             </div>
             <div className="row">
               <span>Remark</span>
 
-              <span>{item?.remark}</span>
+              <span>{deposit?.remark}</span>
             </div>
             <div className="row">
               <span>Site</span>
 
-              <span>{item?.site}</span>
+              <span>{deposit?.site}</span>
             </div>
             <div className="row">
               <span>Request Time</span>
 
-              <span>{item?.date_added}</span>
+              <span>{deposit?.date_added}</span>
             </div>
 
-            {/* <div className="actions">
-              <button>User bet history</button>
-              <button>Transactions</button>
-            </div> */}
+            <div
+              className="actions"
+              style={{
+                display:
+                  adminRole === AdminRole.master ||
+                  adminRole === AdminRole.branch_staff
+                    ? "flex"
+                    : "none",
+              }}
+            >
+              <button
+                onClick={() => handleOpenModal(deposit, ModalNames.editDeposit)}
+                className="btn btn-success"
+              >
+                <FaEdit />
+              </button>
+            </div>
           </div>
         );
       })}

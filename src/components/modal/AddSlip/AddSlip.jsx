@@ -2,17 +2,15 @@ import { useDispatch } from "react-redux";
 import ModalWrapper from "../ModalWrapper/ModalWrapper";
 import toast from "react-hot-toast";
 import GoForm from "../../shared/form/GoForm";
-import GoInput from "../../shared/form/GoInput";
 import { FormProvider, useForm } from "react-hook-form";
 import { useDetectUtrMutation } from "../../../hooks/detectUtr";
 import { useEffect, useState } from "react";
 import { useUploadScreenShot } from "../../../hooks/uploadScreenshot";
-import GoSelect from "../../shared/form/GoSelect";
-import { useWithdrawMutation, useWithdrawQuery } from "../../../hooks/withdraw";
+import { useWithdrawMutation } from "../../../hooks/withdraw";
 import { FaSpinner } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 
-const EditWithdraw = ({ modal, setModal }) => {
+const AddSlip = ({ modal, setModal, refetch }) => {
   const dispatch = useDispatch();
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -20,23 +18,17 @@ const EditWithdraw = ({ modal, setModal }) => {
   const [filename, setFilename] = useState("");
   const [utr, setUtr] = useState(null);
 
-  const payload = {
-    type: "viewSingleWithdraw",
-    withdrawId: modal?.withdraw_id,
-  };
   const methods = useForm();
   const {
     handleSubmit,
     reset,
-    watch,
     formState: { isSubmitting },
   } = methods;
-  const statusField = watch("status");
-  const { data } = useWithdrawQuery(payload);
+
   const { mutate: detectUTR } = useDetectUtrMutation();
   const { mutate: uploadScreenShot } = useUploadScreenShot();
   const {
-    mutate: withdrawMutation,
+    mutate: addSlipMutation,
     isPending,
     isSuccess,
   } = useWithdrawMutation();
@@ -90,21 +82,20 @@ const EditWithdraw = ({ modal, setModal }) => {
     }
   }, [image, reset, detectUTR, uploadScreenShot]);
 
-  const onSubmit = async ({ remark, status }) => {
+  const onSubmit = async () => {
     const payload = {
       withdrawId: modal?.withdraw_id,
-      status,
-      remark,
       utr,
-      type: "editWithdraw",
+      type: "uploadSlip",
       fileName: filename,
     };
 
-    withdrawMutation(payload, {
+    addSlipMutation(payload, {
       onSuccess: (data) => {
         if (data?.success) {
           toast.success(data?.result?.message);
           reset();
+          refetch();
           closeModal();
         } else {
           toast.error(data?.error?.status?.[0]?.description);
@@ -112,15 +103,6 @@ const EditWithdraw = ({ modal, setModal }) => {
       },
     });
   };
-  const statusData = [
-    { label: "PENDING", key: "PENDING" },
-    { label: "APPROVED", key: "APPROVED" },
-    { label: "REJECTED", key: "REJECTED" },
-  ];
-
-  if (!data?.result) {
-    return null;
-  }
 
   return (
     <div className="modal-overlay">
@@ -129,37 +111,20 @@ const EditWithdraw = ({ modal, setModal }) => {
           <GoForm onSubmit={handleSubmit(onSubmit)}>
             {/* Modal Header */}
             <div className="modal-header">
-              <span>Edit Withdraw</span>
+              <span>Add Slip</span>
               <span onClick={closeModal} className="close-icon">
                 ✕
               </span>
             </div>
             {/* Modal Body */}
             <div className="modal-body">
-              <div style={{ position: "relative" }}>
-                <label> Amount</label>
-                <input
-                  readOnly
-                  value={data?.result?.amount}
-                  style={{ background: "transparent" }}
-                />
-              </div>
-
-              <GoSelect
-                label="Status"
-                name="status"
-                required
-                placeholder="Select"
-                data={statusData}
-                defaultValue={data?.result?.status}
-              />
-              {!uploadedImage && statusField === "APPROVED" && (
+              {!uploadedImage && (
                 <div style={{ position: "relative" }}>
                   <label> Withdraw Slip</label>
                   <input onChange={(e) => handleImageChange(e)} type="file" />
                 </div>
               )}
-              {uploadedImage && loading && (
+              {!uploadedImage && loading && (
                 <div style={{ position: "relative" }}>
                   <label> Withdraw Slip</label>
                   <div
@@ -202,21 +167,14 @@ const EditWithdraw = ({ modal, setModal }) => {
                 </div>
               )}
 
-              {statusField === "APPROVED" && (
-                <GoInput
-                  label="UTR"
-                  name="utr"
-                  required
+              <div style={{ position: "relative" }}>
+                <label> UTR (Optional)</label>
+                <input
+                  type="text"
+                  onChange={(e) => setUtr(e.target.value)}
                   placeholder="Enter UTR"
                 />
-              )}
-
-              <GoInput
-                label="Remark"
-                name="remark"
-                required
-                placeholder="Enter Remark"
-              />
+              </div>
             </div>
             {/* Modal Footer */}
             <div className="modal-footer">
@@ -235,4 +193,4 @@ const EditWithdraw = ({ modal, setModal }) => {
   );
 };
 
-export default EditWithdraw;
+export default AddSlip;

@@ -2,9 +2,9 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosSecure } from "../lib/AxiosSecure";
 import { API } from "../api";
 
-export const useCheckerMutation = () => {
+export const useStaffMutation = () => {
   return useMutation({
-    mutationKey: ["add-checker"],
+    mutationKey: ["add-staff"],
     mutationFn: async (payload) => {
       const { data } = await AxiosSecure.post(API.staff, payload);
       return data;
@@ -12,14 +12,11 @@ export const useCheckerMutation = () => {
   });
 };
 
-export const useStaffQuery = () => {
+export const useStaffQuery = (payload) => {
   return useQuery({
-    queryKey: ["view-checker"],
+    queryKey: ["view-staff", payload],
     queryFn: async () => {
-      const { data } = await AxiosSecure.post(API.staff, {
-        type: "viewStaff",
-        role: "admin_staff",
-      });
+      const { data } = await AxiosSecure.post(API.staff, payload);
       return data;
     },
   });

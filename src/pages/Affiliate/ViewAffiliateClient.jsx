@@ -99,6 +99,7 @@ const ViewAffiliateClient = () => {
             </div>
             <div className="actions">
               <button
+                className="btn btn-warning"
                 onClick={() =>
                   navigate(
                     `/pnl?id=${affiliate?.punter_id}&role=punter&downlineId=${affiliate?.punter_id}`,

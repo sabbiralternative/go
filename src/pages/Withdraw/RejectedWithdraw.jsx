@@ -1,6 +1,6 @@
 import { Fragment, useState } from "react";
 import PageHeader from "../../components/shared/PageHeader/PageHeader";
-import { AdminRole } from "../../constant/constant";
+import { AdminRole, ModalNames } from "../../constant/constant";
 import { useSelector } from "react-redux";
 import { useGetIndexQuery } from "../../hooks";
 import { MdOutlineContentCopy } from "react-icons/md";
@@ -13,8 +13,13 @@ import { defaultDate } from "../../utils/defaultDate";
 import { useNavigate } from "react-router-dom";
 import DefaultDateButton from "../../components/shared/DefaultDateButton/DefaultDateButton";
 import { useExportCSVMutation } from "../../hooks/exportCSV";
+import AddSlip from "../../components/modal/AddSlip/AddSlip";
 
 const RejectedWithdraw = () => {
+  const [modal, setModal] = useState({
+    name: "",
+    withdraw_id: "",
+  });
   const { mutate: exportMutation } = useExportCSVMutation();
   const navigate = useNavigate();
   const [image, setImage] = useState("");
@@ -45,7 +50,7 @@ const RejectedWithdraw = () => {
     payload.branch_id = branchId;
   }
 
-  const { data: pendingWithdraw } = useWithdrawQuery(payload, 30000);
+  const { data: pendingWithdraw, refetch } = useWithdrawQuery(payload, 30000);
   const meta = pendingWithdraw?.pagination;
 
   const exportToExcel = async () => {
@@ -66,28 +71,18 @@ const RejectedWithdraw = () => {
     exportMutation(payload);
   };
 
-  // const handleCopy = (item) => {
-  //   const formattedText = `
-  //   Client Id: ${item?.userId || ""}
-  //   Amount: ${Math.abs(item?.amount) || ""}
-  //   Bank Account Name: ${item?.bank_account_name || ""}
-  //   Account Number: ${item?.account_number || ""}
-  //   Bank Name: ${item?.bank_name || ""}
-  //   IFSC: ${item?.ifsc || ""}
-  //   Request Time: ${item?.date_added || ""}
-  // `;
-  //   navigator.clipboard
-  //     .writeText(formattedText)
-  //     .then(() => {
-  //       toast.success("All data copied to clipboard");
-  //     })
-  //     .catch((err) => {
-  //       console.error("Failed to copy: ", err);
-  //     });
-  // };
+  const handleOpenModal = (withdraw, name) => {
+    setModal({
+      name,
+      withdraw_id: withdraw?.withdraw_id,
+    });
+  };
   return (
     <Fragment>
       {image && <ImagePreview image={image} setImage={setImage} />}
+      {modal?.name === ModalNames.addSlip && (
+        <AddSlip modal={modal} setModal={setModal} refetch={refetch} />
+      )}
       {/* Header */}
       <PageHeader title="Pending Withdraw" />
 
@@ -192,7 +187,7 @@ const RejectedWithdraw = () => {
         )}
       </div>
       {/* Client Card */}
-      {pendingWithdraw?.result?.map((item, index) => {
+      {pendingWithdraw?.result?.map((withdraw, index) => {
         return (
           <div key={index} className="client-card">
             <div className="card-top">
@@ -203,7 +198,7 @@ const RejectedWithdraw = () => {
             </div>
             <div className="row">
               <span>Level</span>
-              <span className="right">{item?.level}</span>
+              <span className="right">{withdraw?.level}</span>
             </div>
             <div className="row">
               <span>User Id</span>
@@ -212,13 +207,13 @@ const RejectedWithdraw = () => {
                   navigate(`/view-client?role=${adminRole}&history=withdraw`);
                 }}
               >
-                {item?.userId}
+                {withdraw?.userId}
               </span>
             </div>
-            {item?.loginnameVisible && (
+            {withdraw?.loginnameVisible && (
               <div className="row">
                 <span>Login Name</span>
-                <span className="right">{item?.loginname}</span>
+                <span className="right">{withdraw?.loginname}</span>
               </div>
             )}
 
@@ -228,51 +223,60 @@ const RejectedWithdraw = () => {
               adminRole === AdminRole.branch_staff) && (
               <div className="row">
                 <span>Branch Name</span>
-                <span>{item?.branch_name}</span>
+                <span>{withdraw?.branch_name}</span>
               </div>
             )}
 
             <div className="row">
               <span>Amount</span>
-              <span>{item?.amount}</span>
+              <span>{withdraw?.amount}</span>
             </div>
             <div className="row">
               <span>Remark</span>
-              <span>{item?.remark}</span>
+              <span>{withdraw?.remark}</span>
             </div>
             <div className="row">
               <span>Slip</span>
-              {item?.withdraw_slip ? (
+              {withdraw?.withdraw_slip ? (
                 <span
                   onClick={() => {
-                    setImage(item?.withdraw_slip);
+                    setImage(withdraw?.withdraw_slip);
                   }}
                   style={{ color: "#346cee", cursor: "pointer" }}
                 >
                   View
                 </span>
               ) : (
-                <span>Add</span>
+                <span
+                  className="text-danger"
+                  onClick={() => handleOpenModal(withdraw, ModalNames.addSlip)}
+                >
+                  Add
+                </span>
               )}
             </div>
 
             <div className="row">
               <span>Bank Account Name</span>
               <span>
-                {item?.bank_account_name}{" "}
+                {withdraw?.bank_account_name}{" "}
                 <MdOutlineContentCopy
                   style={{ cursor: "pointer" }}
-                  onClick={() => handleCopyToClipBoard(item?.bank_account_name)}
+                  onClick={() =>
+                    handleCopyToClipBoard(withdraw?.bank_account_name)
+                  }
                 />
               </span>
             </div>
             <div className="row">
               <span>Account Number</span>
               <span>
-                {item?.account_number}{" "}
+                {withdraw?.account_number}{" "}
                 <MdOutlineContentCopy
                   style={{ cursor: "pointer" }}
-                  onClick={() => handleCopyToClipBoard(item?.account_number)}
+                  onClick={() =>
+                    handleCopyToClipBoard(withdraw?.account_number)
+                  }
                 />
               </span>
             </div>
@@ -280,50 +284,50 @@ const RejectedWithdraw = () => {
             <div className="row">
               <span>Bank Name</span>
               <span>
-                {item?.bank_name}{" "}
+                {withdraw?.bank_name}{" "}
                 <MdOutlineContentCopy
                   style={{ cursor: "pointer" }}
-                  onClick={() => handleCopyToClipBoard(item?.bank_name)}
+                  onClick={() => handleCopyToClipBoard(withdraw?.bank_name)}
                 />
               </span>
             </div>
             <div className="row">
               <span>IFSC</span>
               <span>
-                {item?.ifsc}{" "}
+                {withdraw?.ifsc}{" "}
                 <MdOutlineContentCopy
                   style={{ cursor: "pointer" }}
-                  onClick={() => handleCopyToClipBoard(item?.ifsc)}
+                  onClick={() => handleCopyToClipBoard(withdraw?.ifsc)}
                 />
               </span>
             </div>
 
             <div className="row">
               <span>UPI ID</span>
-              <span>{item?.upi_id} </span>
+              <span>{withdraw?.upi_id} </span>
             </div>
 
             <div className="row">
               <span>Status</span>
 
-              <span className={item.status}>{item?.status}</span>
+              <span className={withdraw.status}>{withdraw?.status}</span>
             </div>
 
             <div className="row">
               <span>Request Time</span>
 
-              <span>{item?.date_added}</span>
+              <span>{withdraw?.date_added}</span>
             </div>
 
             <div className="row">
               <span>Rejected Time</span>
 
-              <span>{item?.date_modified}</span>
+              <span>{withdraw?.date_modified}</span>
             </div>
             <div className="row">
               <span>Rejected By</span>
 
-              <span>{item?.modify_by}</span>
+              <span>{withdraw?.modify_by}</span>
             </div>
           </div>
         );

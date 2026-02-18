@@ -53,4 +53,13 @@ export const ModalNames = {
   directDeposit: "directDeposit",
   changeBranch: "changeBranch",
   editWithdraw: "editWithdraw",
+  editDeposit: "editDeposit",
+  depositReport: "depositReport",
+  addSlip: "addSlip",
+  updatePendingBonus: "updatePendingBonus",
+  updatePermission: "updatePermission",
+  updateStaffStatus: "updateStaffStatus",
+  staffChangePassword: "staffChangePassword",
+  editPaymentMethod: "editPaymentMethod",
+  deletePaymentMethod: "deletePaymentMethod",
 };
