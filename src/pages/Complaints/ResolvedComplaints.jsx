@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 import PageHeader from "../../components/shared/PageHeader/PageHeader";
 import { Pagination } from "rsuite";
-import useComplaintsQuery from "../../hooks/complaints";
+import { useComplaintsQuery } from "../../hooks/complaints";
 
 const ResolvedComplaints = () => {
   // const [complaintId, setComplaintId] = useState(null);

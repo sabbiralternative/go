@@ -10,6 +10,7 @@ import { Pagination } from "rsuite";
 import ImagePreview from "../../components/modal/ImagePreview/ImagePreview";
 import { FaEdit } from "react-icons/fa";
 import EditDeposit from "../../components/modal/EditDeposit/EditDeposit";
+import LevelTable from "../../components/shared/LevelTable/LevelTable";
 
 const PendingDeposit = () => {
   const [modal, setModal] = useState({
@@ -253,6 +254,8 @@ const PendingDeposit = () => {
           />
         )}
       </div>
+
+      <LevelTable />
     </Fragment>
   );
 };

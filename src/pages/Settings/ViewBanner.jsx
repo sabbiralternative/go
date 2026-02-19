@@ -1,14 +1,64 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import PageHeader from "../../components/shared/PageHeader/PageHeader";
-import { useBannerQuery } from "../../hooks/banner";
+import { useBannerMutation, useBannerQuery } from "../../hooks/banner";
+import { ModalNames } from "../../constant/constant";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
+import EditBanner from "../../components/modal/EditBanner/EditBanner";
 
 const ViewBanner = () => {
-  const { data } = useBannerQuery({
+  const [modal, setModal] = useState({
+    name: "",
+    banner_id: "",
+  });
+  const { data, refetch } = useBannerQuery({
     type: "getBanners",
   });
+
+  const { mutate: deleteBanner } = useBannerMutation();
+
+  const handleOpenModal = (deposit, name) => {
+    setModal({
+      name,
+      banner_id: deposit?.banner_id,
+    });
+  };
+
+  const handleDeleteBanner = async (banner) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to delete this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const payload = {
+          type: "deleteBanner",
+          bannerId: banner?.banner_id,
+        };
+        deleteBanner(payload, {
+          onSuccess: (data) => {
+            if (data?.success) {
+              refetch();
+              toast.success(data?.result?.message);
+            } else {
+              toast.error(data?.error?.status?.[0]?.description);
+            }
+          },
+        });
+      }
+    });
+  };
+
   return (
     <Fragment>
       {/* Header */}
+      {modal?.name === ModalNames.editBanner && (
+        <EditBanner modal={modal} setModal={setModal} refetch={refetch} />
+      )}
       <PageHeader title="Banners" />
 
       {/* Card */}
@@ -40,6 +90,21 @@ const ViewBanner = () => {
             <div className="row">
               <span>Status</span>
               <span> {banner?.status === 1 ? "Active" : "InActive"}</span>
+            </div>
+
+            <div className="actions">
+              <button
+                onClick={() => handleOpenModal(banner, ModalNames.editBanner)}
+                className="btn btn-success"
+              >
+                E
+              </button>
+              <button
+                onClick={() => handleDeleteBanner(banner)}
+                className="btn btn-danger"
+              >
+                D
+              </button>
             </div>
           </div>
         );

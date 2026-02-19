@@ -1,21 +1,36 @@
 import { Fragment, useState } from "react";
 import PageHeader from "../../components/shared/PageHeader/PageHeader";
 import { Pagination } from "rsuite";
-import useComplaintsQuery from "../../hooks/complaints";
+import { ModalNames } from "../../constant/constant";
+import EditComplaints from "../../components/modal/EditComplaints/EditComplaints";
+import { useComplaintsQuery } from "../../hooks/complaints";
 
 const PendingComplaints = () => {
-  // const [complaintId, setComplaintId] = useState(null);
+  const [modal, setModal] = useState({
+    name: "",
+    complaint_id: "",
+  });
   const [activePage, setActivePage] = useState(1);
-  const { data, isSuccess } = useComplaintsQuery({
+  const { data, isSuccess, refetch } = useComplaintsQuery({
     type: "viewComplaint",
     status: 0,
     page: activePage,
   });
   const meta = data?.pagination;
   const result = data?.result;
+
+  const handleOpenModal = (complaint, name) => {
+    setModal({
+      name,
+      complaint_id: complaint?.complaint_id,
+    });
+  };
   return (
     <Fragment>
       {/* Header */}
+      {modal?.name === ModalNames.editComplaint && (
+        <EditComplaints modal={modal} setModal={setModal} refetch={refetch} />
+      )}
       <PageHeader title="Pending Complaints" />
 
       <div className="flex-end">
@@ -89,6 +104,14 @@ const PendingComplaints = () => {
               <span>Statement Type</span>
 
               <span>{item?.statement_type}</span>
+            </div>
+            <div className="actions">
+              <button
+                onClick={() => handleOpenModal(item, ModalNames.editComplaint)}
+                className="btn btn-success"
+              >
+                E
+              </button>
             </div>
           </div>
         );

@@ -1,25 +1,33 @@
 const LevelTable = () => {
   return (
-    <div className="card" style={{ padding: "20px" }}>
+    <div className="client-card">
       {" "}
-      <table className="level-table">
-        <tr>
-          <th style={{ background: "#242e3c" }}>Deposit Range</th>
-          <td>0–5</td>
-          <td>6–20</td>
-          <td>21–30</td>
-          <td>31–100</td>
-          <td>100+</td>
-        </tr>
-        <tr>
-          <th style={{ background: "#242e3c" }}>Level</th>
-          <td>Not Trusted</td>
-          <td>Trusted</td>
-          <td>VIP</td>
-          <td>VVIP</td>
-          <td>Premium</td>
-        </tr>
-      </table>
+      <div className="card-top">
+        <strong>Key</strong>
+        <span className="status">
+          <i className="ph ph-lock-key-open" /> Value
+        </span>
+      </div>
+      <div className="row">
+        <span>0–5</span>
+        <span className="right">Not Trusted</span>
+      </div>
+      <div className="row">
+        <span>6–20</span>
+        <span className="right">Trusted</span>
+      </div>
+      <div className="row">
+        <span>21–30</span>
+        <span className="right">VIP</span>
+      </div>
+      <div className="row">
+        <span>31–100</span>
+        <span className="right">VVIP</span>
+      </div>
+      <div className="row">
+        <span>100+</span>
+        <span className="right">Premium</span>
+      </div>
     </div>
   );
 };

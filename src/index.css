@@ -126,6 +126,13 @@ select {
   width: 100%;
 }
 
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .rs-pagination-btn {
   color: black !important;
 }
@@ -1346,4 +1353,45 @@ th {
 
 tbody tr:hover {
   background: #f9fafb;
+}
+.modal-body textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: #f0f0f0;
+  outline: none;
+  font-size: 10px;
+}
+.bg-label-primary {
+  background-color: #5a8eee37 !important;
+  color: #5a8dee !important;
+}
+
+.bg-label-danger {
+  background-color: #ff5b5b44 !important;
+  color: #ff5b5c !important;
+}
+
+.badge {
+  text-transform: uppercase;
+  line-height: 0.92;
+}
+.badge {
+  --bs-badge-padding-x: 0.75em;
+  --bs-badge-padding-y: 0.444em;
+  --bs-badge-font-size: 0.813em;
+  --bs-badge-font-weight: 500;
+  --bs-badge-color: #fff;
+  --bs-badge-border-radius: 0.1875rem;
+  display: inline-block;
+  padding: var(--bs-badge-padding-y) var(--bs-badge-padding-x);
+  font-size: var(--bs-badge-font-size);
+  font-weight: var(--bs-badge-font-weight);
+  line-height: 1;
+  color: var(--bs-badge-color);
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: var(--bs-badge-border-radius);
 }

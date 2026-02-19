@@ -112,22 +112,31 @@ const ViewSuperBranches = () => {
             </div>
             <div className="row">
               <span>Status</span>
-              <span> {branch?.userStatus === 1 ? "active" : "inactive"}</span>
+              <span
+                className={`badge  ${
+                  branch?.userStatus === 1
+                    ? "bg-label-primary"
+                    : "bg-label-danger"
+                }`}
+              >
+                {" "}
+                {branch?.userStatus === 1 ? "active" : "inactive"}
+              </span>
             </div>
             <div className="row">
               <span>Betting Status</span>
-              <span>
+              <span
+                className={`badge   ${
+                  branch?.bettingStatus === 1
+                    ? "bg-label-primary"
+                    : "bg-label-danger"
+                }`}
+              >
                 {" "}
                 {branch?.bettingStatus === 1 ? "active" : "inactive"}
               </span>
             </div>
-            <div className="row">
-              <span>Registration Status</span>
-              <span>
-                {" "}
-                {branch?.registrationStatus === 1 ? "active" : "inactive"}
-              </span>
-            </div>
+
             {adminRole !== AdminRole.admin_staff && (
               <div className="row">
                 <span>Reg. Date</span>

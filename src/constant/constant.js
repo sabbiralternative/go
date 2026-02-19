@@ -62,4 +62,6 @@ export const ModalNames = {
   staffChangePassword: "staffChangePassword",
   editPaymentMethod: "editPaymentMethod",
   deletePaymentMethod: "deletePaymentMethod",
+  editComplaint: "editComplaint",
+  editBanner: "editBanner",
 };

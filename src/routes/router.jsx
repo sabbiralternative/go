@@ -52,6 +52,13 @@ import ClientBranchChangeReport from "../pages/Report/ClientBranchChangeReport";
 import AddClient from "../pages/Clients/AddClient";
 import PNL from "../pages/PNL/PNL";
 import ActivityLogs from "../pages/ActivityLogs/ActivityLogs";
+import AddBanner from "../pages/Settings/AddBanner";
+import AddLoginBanner from "../pages/Settings/AddLoginBanner";
+import AddNotification from "../pages/Settings/AddNotification";
+import AddBonus from "../pages/Bonus/AddBonus";
+import AddLossBackBonusByEvent from "../pages/Bonus/AddLossBackBonusByEvent";
+import AddLossBackBonusByDate from "../pages/Bonus/AddLossBackBonusByDate";
+import MarketAnalysis from "../pages/Exposure/MarketAnalysis";
 
 export const router = createBrowserRouter(
   [
@@ -263,6 +270,34 @@ export const router = createBrowserRouter(
         {
           path: "/activity-logs",
           element: <ActivityLogs />,
+        },
+        {
+          path: "/add-banner",
+          element: <AddBanner />,
+        },
+        {
+          path: "/add-login-banner",
+          element: <AddLoginBanner />,
+        },
+        {
+          path: "/add-notification",
+          element: <AddNotification />,
+        },
+        {
+          path: "/add-bonus",
+          element: <AddBonus />,
+        },
+        {
+          path: "/add-loss-back-bonus-by-event",
+          element: <AddLossBackBonusByEvent />,
+        },
+        {
+          path: "/add-loss-back-bonus-by-date",
+          element: <AddLossBackBonusByDate />,
+        },
+        {
+          path: "/market-analysis",
+          element: <MarketAnalysis />,
         },
       ],
     },

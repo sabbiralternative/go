@@ -13,6 +13,7 @@ import { defaultDate } from "../../utils/defaultDate";
 import { useNavigate } from "react-router-dom";
 import DefaultDateButton from "../../components/shared/DefaultDateButton/DefaultDateButton";
 import AddSlip from "../../components/modal/AddSlip/AddSlip";
+import LevelTable from "../../components/shared/LevelTable/LevelTable";
 
 const CompletedWithdraw = () => {
   const [modal, setModal] = useState({
@@ -319,6 +320,7 @@ const CompletedWithdraw = () => {
           />
         )}
       </div>
+      <LevelTable />
     </Fragment>
   );
 };

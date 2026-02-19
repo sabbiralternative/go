@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import DefaultDateButton from "../../components/shared/DefaultDateButton/DefaultDateButton";
 import { useExportCSVMutation } from "../../hooks/exportCSV";
 import AddSlip from "../../components/modal/AddSlip/AddSlip";
+import LevelTable from "../../components/shared/LevelTable/LevelTable";
 
 const RejectedWithdraw = () => {
   const [modal, setModal] = useState({
@@ -348,6 +349,7 @@ const RejectedWithdraw = () => {
           />
         )}
       </div>
+      <LevelTable />
     </Fragment>
   );
 };

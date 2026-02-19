@@ -5,6 +5,7 @@ import { AdminRole } from "../../constant/constant";
 import { useSelector } from "react-redux";
 import handleNavigateToWhatsApp from "../../utils/handleNavigateToWhatsApp";
 import ClientAction from "../../components/shared/ClientAction/ClientAction";
+import LevelTable from "../../components/shared/LevelTable/LevelTable";
 
 const AllClients = () => {
   const { adminRole } = useSelector((state) => state.auth);
@@ -89,14 +90,29 @@ const AllClients = () => {
             </div>
             <div className="row">
               <span>Betting Status</span>
-              <span>
+              <span
+                className={`badge  ${
+                  client?.bettingStatus === 1
+                    ? "bg-label-primary"
+                    : "bg-label-danger"
+                }`}
+              >
                 {" "}
                 {client?.bettingStatus === 1 ? "Active" : "InActive"}
               </span>
             </div>
             <div className="row">
               <span>Status</span>
-              <span> {client?.userStatus === 1 ? "Active" : "InActive"}</span>
+              <span
+                className={`badge  ${
+                  client?.userStatus === 1
+                    ? "bg-label-primary"
+                    : "bg-label-danger"
+                }`}
+              >
+                {" "}
+                {client?.userStatus === 1 ? "Active" : "InActive"}
+              </span>
             </div>
             <div className="row">
               <span>Site</span>
@@ -114,7 +130,7 @@ const AllClients = () => {
           </div>
         );
       })}
-
+      <LevelTable />
       {isSuccess && data?.result?.length === 0 && (
         <div className="client-card">
           <p style={{ fontSize: "12px" }}> No data found.</p>

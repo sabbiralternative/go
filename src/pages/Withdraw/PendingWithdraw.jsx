@@ -15,6 +15,7 @@ import { FaEdit, FaRegCopy } from "react-icons/fa";
 import toast from "react-hot-toast";
 import EditWithdraw from "../../components/modal/EditWithdraw/EditWithdraw";
 import DepositReport from "../../components/modal/DepositReport/DepositReport";
+import LevelTable from "../../components/shared/LevelTable/LevelTable";
 
 const PendingWithdraw = () => {
   const [modal, setModal] = useState({
@@ -377,6 +378,7 @@ const PendingWithdraw = () => {
           />
         )}
       </div>
+      <LevelTable />
     </Fragment>
   );
 };

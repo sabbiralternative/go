@@ -12,6 +12,7 @@ import { defaultDate } from "../../utils/defaultDate";
 import moment from "moment";
 import DefaultDateButton from "../../components/shared/DefaultDateButton/DefaultDateButton";
 import { useNavigate } from "react-router-dom";
+import LevelTable from "../../components/shared/LevelTable/LevelTable";
 
 const CompletedDeposit = () => {
   const navigate = useNavigate();
@@ -280,6 +281,7 @@ const CompletedDeposit = () => {
           />
         )}
       </div>
+      <LevelTable />
     </Fragment>
   );
 };

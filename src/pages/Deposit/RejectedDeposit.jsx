@@ -13,6 +13,7 @@ import moment from "moment";
 import DefaultDateButton from "../../components/shared/DefaultDateButton/DefaultDateButton";
 import { useNavigate } from "react-router-dom";
 import { useExportCSVMutation } from "../../hooks/exportCSV";
+import LevelTable from "../../components/shared/LevelTable/LevelTable";
 
 const RejectedDeposit = () => {
   const { mutate: exportMutation } = useExportCSVMutation();
@@ -308,6 +309,7 @@ const RejectedDeposit = () => {
           />
         )}
       </div>
+      <LevelTable />
     </Fragment>
   );
 };
