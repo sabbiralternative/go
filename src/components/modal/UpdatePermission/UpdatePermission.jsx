@@ -78,6 +78,12 @@ const UpdatePermission = ({ modal, setModal, refetch }) => {
         adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
     },
     {
+      label: "Add Client",
+      value: "add_client",
+      show:
+        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+    },
+    {
       label: "Direct Deposit",
       value: "directDeposit",
       show: true,
