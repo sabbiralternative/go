@@ -143,23 +143,25 @@ const ViewPaymentMethods = () => {
               <span>{method?.name}</span>
             </div>
             <div className="row">
+              <span>Level</span>
+              <span>{method?.level}</span>
+            </div>
+            <div className="row">
               <span>Slip</span>
-              {method?.image && (
-                <span>
-                  <img
-                    onClick={() => {
-                      setImage(method?.image);
-                    }}
-                    style={{
-                      height: "40px",
-                      width: "40px",
-                      objectFit: "contain",
-                      cursor: "pointer",
-                    }}
-                    src={method?.image}
-                    alt=""
-                  />
+              {method?.image ? (
+                <span
+                  onClick={() => {
+                    setImage(method?.image);
+                  }}
+                  style={{
+                    color: "#346cee",
+                    cursor: "pointer",
+                  }}
+                >
+                  View
                 </span>
+              ) : (
+                <span>N/A</span>
               )}
             </div>
 
