@@ -15,6 +15,7 @@ import DefaultDateButton from "../../components/shared/DefaultDateButton/Default
 import { useExportCSVMutation } from "../../hooks/exportCSV";
 import AddSlip from "../../components/modal/AddSlip/AddSlip";
 import LevelTable from "../../components/shared/LevelTable/LevelTable";
+import ClientColor from "../../components/shared/ClientColor/ClientColor";
 
 const RejectedWithdraw = () => {
   const [modal, setModal] = useState({
@@ -208,7 +209,7 @@ const RejectedWithdraw = () => {
                   navigate(`/view-client?role=${adminRole}&history=withdraw`);
                 }}
               >
-                {withdraw?.userId}
+                <ClientColor client={withdraw} /> {withdraw?.userId}
               </span>
             </div>
             {withdraw?.loginnameVisible && (

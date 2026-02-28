@@ -11,6 +11,7 @@ import ImagePreview from "../../components/modal/ImagePreview/ImagePreview";
 import { FaEdit } from "react-icons/fa";
 import EditDeposit from "../../components/modal/EditDeposit/EditDeposit";
 import LevelTable from "../../components/shared/LevelTable/LevelTable";
+import ClientColor from "../../components/shared/ClientColor/ClientColor";
 
 const PendingDeposit = () => {
   const [modal, setModal] = useState({
@@ -151,7 +152,10 @@ const PendingDeposit = () => {
             </div>
             <div className="row">
               <span>User Id</span>
-              <span>{deposit?.userId}</span>
+              <span>
+                <ClientColor client={deposit} />
+                {deposit?.userId}
+              </span>
             </div>
             {(adminRole === AdminRole.admin_staff ||
               adminRole === AdminRole.hyper_master ||

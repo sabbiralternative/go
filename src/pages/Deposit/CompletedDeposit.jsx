@@ -13,6 +13,7 @@ import moment from "moment";
 import DefaultDateButton from "../../components/shared/DefaultDateButton/DefaultDateButton";
 import { useNavigate } from "react-router-dom";
 import LevelTable from "../../components/shared/LevelTable/LevelTable";
+import ClientColor from "../../components/shared/ClientColor/ClientColor";
 
 const CompletedDeposit = () => {
   const navigate = useNavigate();
@@ -169,7 +170,7 @@ const CompletedDeposit = () => {
                   navigate(`/view-client?role=${adminRole}&history=deposit`);
                 }}
               >
-                {item?.userId}
+                <ClientColor client={item} /> {item?.userId}
               </span>
             </div>
             {(adminRole === AdminRole.admin_staff ||

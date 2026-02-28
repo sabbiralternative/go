@@ -14,6 +14,7 @@ import DefaultDateButton from "../../components/shared/DefaultDateButton/Default
 import { useNavigate } from "react-router-dom";
 import { useExportCSVMutation } from "../../hooks/exportCSV";
 import LevelTable from "../../components/shared/LevelTable/LevelTable";
+import ClientColor from "../../components/shared/ClientColor/ClientColor";
 
 const RejectedDeposit = () => {
   const { mutate: exportMutation } = useExportCSVMutation();
@@ -197,7 +198,7 @@ const RejectedDeposit = () => {
                   navigate(`/view-client?role=${adminRole}&history=deposit`);
                 }}
               >
-                {item?.userId}
+                <ClientColor client={item} /> {item?.userId}
               </span>
             </div>
             {(adminRole === AdminRole.admin_staff ||

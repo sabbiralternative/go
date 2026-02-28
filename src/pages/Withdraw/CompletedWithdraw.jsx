@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import DefaultDateButton from "../../components/shared/DefaultDateButton/DefaultDateButton";
 import AddSlip from "../../components/modal/AddSlip/AddSlip";
 import LevelTable from "../../components/shared/LevelTable/LevelTable";
+import ClientColor from "../../components/shared/ClientColor/ClientColor";
 
 const CompletedWithdraw = () => {
   const [modal, setModal] = useState({
@@ -179,7 +180,7 @@ const CompletedWithdraw = () => {
                   navigate(`/view-client?role=${adminRole}&history=withdraw`);
                 }}
               >
-                {withdraw?.userId}
+                <ClientColor client={withdraw} /> {withdraw?.userId}
               </span>
             </div>
             {withdraw?.loginnameVisible && (

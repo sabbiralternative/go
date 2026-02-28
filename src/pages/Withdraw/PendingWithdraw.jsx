@@ -16,6 +16,7 @@ import toast from "react-hot-toast";
 import EditWithdraw from "../../components/modal/EditWithdraw/EditWithdraw";
 import DepositReport from "../../components/modal/DepositReport/DepositReport";
 import LevelTable from "../../components/shared/LevelTable/LevelTable";
+import ClientColor from "../../components/shared/ClientColor/ClientColor";
 
 const PendingWithdraw = () => {
   const [modal, setModal] = useState({
@@ -227,7 +228,7 @@ const PendingWithdraw = () => {
                   navigate(`/view-client?role=${adminRole}&history=withdraw`);
                 }}
               >
-                {withdraw?.userId}
+                <ClientColor client={withdraw} /> {withdraw?.userId}
               </span>
             </div>
             {withdraw?.loginnameVisible && (

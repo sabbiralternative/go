@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import handleNavigateToWhatsApp from "../../utils/handleNavigateToWhatsApp";
 import ClientAction from "../../components/shared/ClientAction/ClientAction";
 import LevelTable from "../../components/shared/LevelTable/LevelTable";
+import ClientColor from "../../components/shared/ClientColor/ClientColor";
 
 const ClientsWithBalance = () => {
   const { adminRole } = useSelector((state) => state.auth);
@@ -36,7 +37,9 @@ const ClientsWithBalance = () => {
             </div>
             <div className="row">
               <span>User Id</span>
-              <span>{client?.userId}</span>
+              <span>
+                <ClientColor client={client} /> {client?.userId}
+              </span>
             </div>
             {data?.result?.[0]?.username2Visible && (
               <div className="row">

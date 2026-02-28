@@ -12,6 +12,7 @@ import ModalWrapper from "../../modal/ModalWrapper/ModalWrapper";
 import ChangeStatus from "../../modal/ChangeStatus/ChangeStatus";
 import ChangePassword from "../../modal/ChangePassword/ChangePassword";
 import CreditReference from "../../modal/CreditReference/CreditReference";
+import ChangeColor from "../../modal/ChangeColor/ChangeColor";
 
 const ClientAction = ({ refetchClient, client, index }) => {
   const showMoreRef = useRef();
@@ -94,6 +95,13 @@ const ClientAction = ({ refetchClient, client, index }) => {
           modal={modal}
           setModal={setModal}
           refetch={refetchClient}
+        />
+      )}
+      {modal?.name === ModalNames.changeColor && (
+        <ChangeColor
+          modal={modal}
+          setModal={setModal}
+          refetchClient={refetchClient}
         />
       )}
 
@@ -284,6 +292,14 @@ const ClientAction = ({ refetchClient, client, index }) => {
                     }
                   >
                     Activity Logs
+                  </button>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() =>
+                      handleOpenModal(client, ModalNames.changeColor)
+                    }
+                  >
+                    Client Group
                   </button>
 
                   {permissions.includes("client") &&

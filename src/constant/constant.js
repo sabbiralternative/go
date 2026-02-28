@@ -13,7 +13,7 @@ export const Status = {
 };
 
 export const clientColor = {
-  0: "white",
+  0: "#9c99998b",
   1: "#39da8a",
   2: "#ff5b5c",
   3: "#fdac41",
@@ -64,4 +64,5 @@ export const ModalNames = {
   deletePaymentMethod: "deletePaymentMethod",
   editComplaint: "editComplaint",
   editBanner: "editBanner",
+  changeColor: "changeColor",
 };

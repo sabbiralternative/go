@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import ModalWrapper from "../ModalWrapper/ModalWrapper";
 import toast from "react-hot-toast";
 import GoForm from "../../shared/form/GoForm";
@@ -12,7 +12,6 @@ import GoSelect from "../../shared/form/GoSelect";
 
 const AddBranchStaff = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { adminRole } = useSelector((state) => state.auth);
   const methods = useForm();
   const { handleSubmit, reset, register } = methods;
   const { data: branches } = useGetIndexQuery({
@@ -54,6 +53,7 @@ const AddBranchStaff = () => {
     { label: "Deposit", value: "deposit", show: true },
     { label: "Withdraw", value: "withdraw", show: true },
     { label: "Client", value: "client", show: true },
+    { label: "Add Client", value: "add_client", show: true },
     { label: "Report", value: "report", show: true },
     {
       label: "Direct Deposit",
@@ -104,10 +104,7 @@ const AddBranchStaff = () => {
           <GoForm onSubmit={handleSubmit(onSubmit)}>
             {/* Modal Header */}
             <div className="modal-header">
-              <span>
-                {" "}
-                Add {adminRole === "master" ? "Staff" : "Admin Staff"}
-              </span>
+              <span> Add Branch Staff</span>
               <span onClick={closeModal} className="close-icon">
                 ✕
               </span>
