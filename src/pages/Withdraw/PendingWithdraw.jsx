@@ -210,7 +210,11 @@ const PendingWithdraw = () => {
       {/* Client Card */}
       {pendingWithdraw?.result?.map((withdraw) => {
         return (
-          <div key={withdraw?.userId} className="client-card">
+          <div
+            style={{ background: withdraw?.bgcolor || "none" }}
+            key={withdraw?.userId}
+            className="client-card"
+          >
             <div className="card-top">
               <strong>Key</strong>
               <span className="status">
@@ -313,14 +317,14 @@ const PendingWithdraw = () => {
             <div className="row">
               <span>Request Time</span>
 
-              <span>{withdraw?.date_added}</span>
+              <span>
+                {" "}
+                {withdraw?.reject_request == "1"
+                  ? "Withdraw Reject requested by client"
+                  : withdraw?.date_added}
+              </span>
             </div>
 
-            <div className="row">
-              <span>Request Time</span>
-
-              <span>{withdraw?.date_added}</span>
-            </div>
             <div
               className="actions"
               style={{
