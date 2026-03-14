@@ -2,10 +2,14 @@ import { Fragment, useState } from "react";
 import PageHeader from "../../components/shared/PageHeader/PageHeader";
 import { useSelector } from "react-redux";
 import { useStaffQuery } from "../../hooks/staff";
-import { AdminRole, ModalNames } from "../../constant/constant";
+import { ModalNames } from "../../constant/constant";
 import UpdateStaffStatus from "../../components/modal/UpdateStaffStatus/UpdateStaffStatus";
 import StaffChangePassword from "../../components/modal/StaffChangePassword/StaffChangePassword";
 import UpdatePermission from "../../components/modal/UpdatePermission/UpdatePermission";
+import Swal from "sweetalert2";
+import { AxiosSecure } from "../../lib/AxiosSecure";
+import { API } from "../../api";
+import toast from "react-hot-toast";
 
 const ViewStaff = () => {
   const [modal, setModal] = useState({
@@ -22,6 +26,33 @@ const ViewStaff = () => {
     setModal({
       name,
       staff_id: staff?.staff_id,
+    });
+  };
+
+  const handleDelete = async (staff) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: `You want to delete ${staff?.staff_name}!`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const payload = {
+          type: "deleteStaff",
+          bonus_id: staff?.staff_id,
+        };
+        const { data } = await AxiosSecure.post(API.staff, payload);
+
+        if (data?.success) {
+          refetch();
+          toast.success(data?.result?.message);
+        } else {
+          toast.error(data?.error?.description);
+        }
+      }
     });
   };
   return (
@@ -84,12 +115,7 @@ const ViewStaff = () => {
               <span>Reg. Dat</span>
               <span>{checker?.date}</span>
             </div>
-            <div
-              className="actions"
-              style={{
-                display: adminRole === AdminRole.master ? "flex" : "none",
-              }}
-            >
+            <div className="actions">
               <button
                 onClick={() =>
                   handleOpenModal(checker, ModalNames.updateStaffStatus)
@@ -113,6 +139,12 @@ const ViewStaff = () => {
                 className="btn btn-warning"
               >
                 R
+              </button>
+              <button
+                onClick={() => handleDelete(checker)}
+                className="btn btn-danger"
+              >
+                D
               </button>
             </div>
           </div>

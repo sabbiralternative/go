@@ -231,7 +231,7 @@ export const getNavItems = (permissions, adminRole, setters) => {
             },
             {
               label: "Add UPI Payment Gateway",
-              href: "/add-payment-gateway",
+              href: "/add-upi-payment-gateway",
               show:
                 adminRole !== AdminRole.hyper_master &&
                 adminRole !== AdminRole.admin_staff,
@@ -246,6 +246,13 @@ export const getNavItems = (permissions, adminRole, setters) => {
             {
               label: "Add i100 Payment Gateway",
               href: "/add-i100-payment-gateway",
+              show:
+                adminRole !== AdminRole.hyper_master &&
+                adminRole !== AdminRole.admin_staff,
+            },
+            {
+              label: "Add UPI Click Gateway",
+              href: "/add-upi-click-gateway",
               show:
                 adminRole !== AdminRole.hyper_master &&
                 adminRole !== AdminRole.admin_staff,

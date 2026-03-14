@@ -175,10 +175,14 @@ const ViewPaymentMethods = () => {
             <div className="row">
               <span>Status</span>
               <span
-                className={`${method?.status == 1 ? "SUCCESS" : "WARNING"}`}
+                className={`${method?.status == 1 ? "SUCCESS" : method?.status === 0 ? "WARNING" : "DELETED"}`}
               >
                 {" "}
-                {method?.userStatus === 1 ? "active" : "inactive"}
+                {method?.status == 1
+                  ? "Active"
+                  : method?.status == 0
+                    ? "inactive"
+                    : "deleted"}
               </span>
             </div>
             <div className="actions">
@@ -187,7 +191,7 @@ const ViewPaymentMethods = () => {
                   onClick={() => navigate(`/view-payment-logs/${method?.id}`)}
                   className="btn btn-success"
                 >
-                  <FaEdit />
+                  L
                 </button>
               )}
 

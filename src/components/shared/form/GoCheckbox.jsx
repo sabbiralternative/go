@@ -15,7 +15,7 @@ export default function GoCheckbox({
       style={{
         display: "flex",
         width: "fit-content",
-        gap: "10px",
+        gap: "5px",
         marginBottom: "20px",
       }}
     >

@@ -59,6 +59,16 @@ import AddBonus from "../pages/Bonus/AddBonus";
 import AddLossBackBonusByEvent from "../pages/Bonus/AddLossBackBonusByEvent";
 import AddLossBackBonusByDate from "../pages/Bonus/AddLossBackBonusByDate";
 import MarketAnalysis from "../pages/Exposure/MarketAnalysis";
+import AddBankAccount from "../pages/Payments/AddBankAccount";
+import AddQR from "../pages/Payments/AddQR";
+import AddUSDT from "../pages/Payments/AddUSDT";
+import AddUSDTBEP20 from "../pages/Payments/AddUSDTBEP20";
+import AddUPIPaymentGateway from "../pages/Payments/AddUPIPaymentGateway";
+import AddTOITPaymentGateway from "../pages/Payments/AddTOITPaymentGateway";
+import AddI100PaymentGateway from "../pages/Payments/AddI100PaymentGateway";
+import AddUPIClickGateway from "../pages/Payments/AddUPIClickGateway";
+import AddUPI from "../pages/Payments/AddUPI";
+import AddWhatsappDeposit from "../pages/Payments/AddWhatsappDeposit";
 
 export const router = createBrowserRouter(
   [
@@ -298,6 +308,47 @@ export const router = createBrowserRouter(
         {
           path: "/market-analysis",
           element: <MarketAnalysis />,
+        },
+        {
+          path: "/add-bank-account",
+          element: <AddBankAccount />,
+        },
+        {
+          path: "/add-QR",
+          element: <AddQR />,
+        },
+        {
+          path: "/add-USDT-TRC20",
+          element: <AddUSDT />,
+        },
+        {
+          path: "/add-USDT-BEP20",
+          element: <AddUSDTBEP20 />,
+        },
+        {
+          path: "/add-upi-payment-gateway",
+          element: <AddUPIPaymentGateway />,
+        },
+        {
+          path: "/add-toit-payment-gateway",
+          element: <AddTOITPaymentGateway />,
+        },
+        {
+          path: "/add-i100-payment-gateway",
+          element: <AddI100PaymentGateway />,
+        },
+        {
+          path: "/add-upi-click-gateway",
+          element: <AddUPIClickGateway />,
+        },
+
+        {
+          path: "/add-UPI",
+          element: <AddUPI />,
+        },
+        {
+          path: "/add-whatsapp-deposit",
+          element: <AddWhatsappDeposit />,
         },
       ],
     },
