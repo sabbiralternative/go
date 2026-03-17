@@ -6,6 +6,7 @@ export default function GoRadio({
   label,
   name,
   value,
+  defaultChecked,
 }) {
   const { register } = useFormContext();
 
@@ -21,6 +22,7 @@ export default function GoRadio({
     >
       {label}
       <input
+        defaultChecked={defaultChecked}
         value={value}
         style={{ width: "fit-content" }}
         type={type}

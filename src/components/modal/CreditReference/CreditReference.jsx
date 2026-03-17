@@ -85,7 +85,7 @@ const CreditReference = ({ modal, setModal, refetch }) => {
               </div>
 
               <GoInput
-                label="Amount"
+                label="Credit Reference"
                 type="number"
                 name="amount"
                 required

@@ -69,6 +69,9 @@ import AddI100PaymentGateway from "../pages/Payments/AddI100PaymentGateway";
 import AddUPIClickGateway from "../pages/Payments/AddUPIClickGateway";
 import AddUPI from "../pages/Payments/AddUPI";
 import AddWhatsappDeposit from "../pages/Payments/AddWhatsappDeposit";
+import AddWhiteLabel from "../pages/Whitelabel/AddWhiteLabel";
+import ViewWhiteLabel from "../pages/Whitelabel/ViewWhiteLabel";
+import UpdateWhiteLabel from "../pages/Whitelabel/UpdateWhiteLabel";
 
 export const router = createBrowserRouter(
   [
@@ -349,6 +352,18 @@ export const router = createBrowserRouter(
         {
           path: "/add-whatsapp-deposit",
           element: <AddWhatsappDeposit />,
+        },
+        {
+          path: "/add-whitelable",
+          element: <AddWhiteLabel />,
+        },
+        {
+          path: "/view-whitelable",
+          element: <ViewWhiteLabel />,
+        },
+        {
+          path: "/update-whitelabel",
+          element: <UpdateWhiteLabel />,
         },
       ],
     },

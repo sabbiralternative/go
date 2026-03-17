@@ -108,7 +108,8 @@
       "exportCSV": "https://admin.api7.live/api/b2c/exportCSV",
       "complaint": "https://admin.api7.live/api/b2c/complaint",
       "affiliate": "https://admin.api7.live/api/b2c/affiliate",
-      "lossback": "https://admin.api7.live/api/b2c/lossback"
+      "lossback": "https://admin.api7.live/api/b2c/lossback",
+      "upload_assets": "https://uploadslip.com/api/upload_assets"
     }
   },
   "success": true

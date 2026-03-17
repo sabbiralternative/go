@@ -84,6 +84,7 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
         API.complaint = data?.result?.endpoint?.complaint;
         API.affiliate = data?.result?.endpoint?.affiliate;
         API.lossback = data?.result?.endpoint?.lossback;
+        API.upload_assets = data?.result?.endpoint?.upload_assets;
         Settings.bonus = data?.result?.settings?.bonus;
         Settings.deposit = data?.result?.settings?.deposit;
         Settings.withdraw = data?.result?.settings?.withdraw;

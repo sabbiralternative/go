@@ -65,4 +65,7 @@ export const ModalNames = {
   editComplaint: "editComplaint",
   editBanner: "editBanner",
   changeColor: "changeColor",
+  addLogo: "addLogo",
+  addTheme: "addTheme",
+  addFavicon: "addFavicon",
 };
