@@ -2,12 +2,13 @@ import { useDispatch } from "react-redux";
 import ModalWrapper from "../ModalWrapper/ModalWrapper";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDownLineEditFormQuery } from "../../../hooks/downLineEditForm";
 import { useBalanceQuery } from "../../../hooks/balance";
 import { useDownLineEditMutation } from "../../../hooks/downLineEdit";
 
 const DirectDeposit = ({ modal, setModal, refetchClient }) => {
+  const amountRef = useRef("");
   const dispatch = useDispatch();
   const [amountTwo, setAmountTwo] = useState(null);
   const [amountOne, setAmountOne] = useState(null);
@@ -135,6 +136,33 @@ const DirectDeposit = ({ modal, setModal, refetchClient }) => {
             <div style={{ position: "relative" }}>
               <label>Deposit Amount</label>
               <input
+                onInput={(e) => {
+                  const raw = e.target.value;
+
+                  if (raw === "") {
+                    amountRef.current = "";
+                    return;
+                  }
+
+                  const value = Number(raw);
+
+                  if (value >= 1) {
+                    amountRef.current = raw;
+                  } else {
+                    e.target.value = amountRef.current;
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (
+                    e.key === "-" ||
+                    e.key === "e" ||
+                    e.key === "E" ||
+                    e.key === "." ||
+                    e.key === "+"
+                  ) {
+                    e.preventDefault();
+                  }
+                }}
                 type="number"
                 onChange={(e) => {
                   handleAmount(e.target.value);

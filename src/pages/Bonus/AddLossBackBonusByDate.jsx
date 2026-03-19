@@ -55,7 +55,6 @@ const AddLossBackBonusByDate = () => {
     { label: "Individual Clients", key: "individual" },
   ];
 
-  console.log(clients);
   return (
     <Fragment>
       {/* Header */}

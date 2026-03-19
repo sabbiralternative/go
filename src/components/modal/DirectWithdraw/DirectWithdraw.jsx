@@ -2,13 +2,14 @@ import { useDispatch, useSelector } from "react-redux";
 import ModalWrapper from "../ModalWrapper/ModalWrapper";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDownLineEditFormQuery } from "../../../hooks/downLineEditForm";
 import { useBalanceQuery } from "../../../hooks/balance";
 import { useDownLineEditMutation } from "../../../hooks/downLineEdit";
 import { AdminRole } from "../../../constant/constant";
 
 const DirectWithdraw = ({ modal, setModal, refetchClient }) => {
+  const amountRef = useRef("");
   const { adminRole } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [amountTwo, setAmountTwo] = useState(null);
@@ -137,6 +138,33 @@ const DirectWithdraw = ({ modal, setModal, refetchClient }) => {
             <div style={{ position: "relative" }}>
               <label>Withdraw Amount</label>
               <input
+                onInput={(e) => {
+                  const raw = e.target.value;
+
+                  if (raw === "") {
+                    amountRef.current = "";
+                    return;
+                  }
+
+                  const value = Number(raw);
+
+                  if (value >= 1) {
+                    amountRef.current = raw;
+                  } else {
+                    e.target.value = amountRef.current;
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (
+                    e.key === "-" ||
+                    e.key === "e" ||
+                    e.key === "E" ||
+                    e.key === "." ||
+                    e.key === "+"
+                  ) {
+                    e.preventDefault();
+                  }
+                }}
                 type="number"
                 onChange={(e) => {
                   handleAmount(e.target.value);

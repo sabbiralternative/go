@@ -6,12 +6,14 @@ import GoInput from "../../shared/form/GoInput";
 import { FormProvider, useForm } from "react-hook-form";
 import { usePaymentQuery } from "../../../hooks/payments";
 import { useDetectUtrMutation } from "../../../hooks/detectUtr";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useUploadScreenShot } from "../../../hooks/uploadScreenshot";
 import { useDepositClientMutation } from "../../../hooks/depositClient";
 import GoSelect from "../../shared/form/GoSelect";
 
 const ClientDeposit = ({ modal, setModal }) => {
+  const [amount, setAmount] = useState(null);
+  const amountRef = useRef("");
   const dispatch = useDispatch();
   const [filePath, setFilePath] = useState("");
   const [image, setImage] = useState(null);
@@ -72,12 +74,12 @@ const ClientDeposit = ({ modal, setModal }) => {
     }
   }, [image, reset, detectUTR, uploadScreenShot]);
 
-  const onSubmit = async ({ amount, utr, paymentId }) => {
+  const onSubmit = async ({ utr, paymentId }) => {
     const payload = {
       id: modal?.id,
       downlineId: modal?.downlineId,
       paymentId,
-      amount,
+      amount: Number(amount),
       slip: filePath,
       utr,
       role: modal?.role,
@@ -123,12 +125,41 @@ const ClientDeposit = ({ modal, setModal }) => {
                 data={paymentMethods}
               />
 
-              <GoInput
-                label="Amount"
-                name="amount"
-                required
-                placeholder="Enter Amount"
-              />
+              <div style={{ position: "relative" }}>
+                <label>Amount</label>
+                <input
+                  onChange={(e) => setAmount(e.target.value)}
+                  placeholder="Enter Amount"
+                  onInput={(e) => {
+                    const raw = e.target.value;
+
+                    if (raw === "") {
+                      amountRef.current = "";
+                      return;
+                    }
+
+                    const value = Number(raw);
+
+                    if (value >= 1) {
+                      amountRef.current = raw;
+                    } else {
+                      e.target.value = amountRef.current;
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    if (
+                      e.key === "-" ||
+                      e.key === "e" ||
+                      e.key === "E" ||
+                      e.key === "." ||
+                      e.key === "+"
+                    ) {
+                      e.preventDefault();
+                    }
+                  }}
+                  type="number"
+                />
+              </div>
               <div style={{ position: "relative" }}>
                 <label> Deposit Slip</label>
                 <input
