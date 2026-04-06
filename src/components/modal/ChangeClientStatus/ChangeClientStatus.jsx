@@ -8,10 +8,8 @@ import {
   useDownLineEditQuery,
 } from "../../../hooks/downLineEdit";
 import GoCheckbox from "../../shared/form/GoCheckbox";
-import { useLocation } from "react-router-dom";
 
-const ChangeStatus = ({ modal, setModal, refetch }) => {
-  const location = useLocation();
+const ChangeClientStatus = ({ modal, setModal, refetch }) => {
   const methods = useForm();
   const { handleSubmit, reset } = methods;
 
@@ -32,11 +30,7 @@ const ChangeStatus = ({ modal, setModal, refetch }) => {
   } = useDownLineEditMutation();
   const { data } = useDownLineEditQuery(payload);
 
-  const onSubmit = async ({
-    userStatus,
-    bettingStatus,
-    registrationStatus,
-  }) => {
+  const onSubmit = async ({ userStatus, bettingStatus, lock_withdraw }) => {
     const payload = {
       type: "changeStatus",
       role: modal?.role,
@@ -44,7 +38,7 @@ const ChangeStatus = ({ modal, setModal, refetch }) => {
       downlineId: modal?.username,
       userStatus: userStatus ? 1 : 0,
       bettingStatus: bettingStatus ? 1 : 0,
-      registrationStatus: registrationStatus ? 1 : 0,
+      lock_withdraw: lock_withdraw ? 1 : 0,
     };
 
     downLineEdit(payload, {
@@ -90,15 +84,12 @@ const ChangeStatus = ({ modal, setModal, refetch }) => {
                 type={"checkbox"}
                 name="bettingStatus"
               />
-              {location.pathname !== "/clients-with-balance" &&
-                location.pathname !== "/view-clients" && (
-                  <GoCheckbox
-                    defaultChecked={modal?.registrationStatus === 1}
-                    label="Registration Status"
-                    type={"checkbox"}
-                    name="registrationStatus"
-                  />
-                )}
+              <GoCheckbox
+                defaultChecked={data?.result?.lock_withdraw === 1}
+                label="Withdraw Locked"
+                type={"checkbox"}
+                name="lock_withdraw"
+              />
             </div>
             {/* Modal Footer */}
             <div className="modal-footer">
@@ -117,4 +108,4 @@ const ChangeStatus = ({ modal, setModal, refetch }) => {
   );
 };
 
-export default ChangeStatus;
+export default ChangeClientStatus;

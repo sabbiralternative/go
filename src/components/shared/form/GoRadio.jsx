@@ -20,7 +20,6 @@ export default function GoRadio({
         marginTop: "5px",
       }}
     >
-      {label}
       <input
         defaultChecked={defaultChecked}
         value={value}
@@ -28,6 +27,7 @@ export default function GoRadio({
         type={type}
         {...register(name, { required })}
       />
+      {label}
     </label>
   );
 }

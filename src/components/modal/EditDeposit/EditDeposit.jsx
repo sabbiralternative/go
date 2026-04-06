@@ -4,8 +4,9 @@ import toast from "react-hot-toast";
 import GoForm from "../../shared/form/GoForm";
 import GoInput from "../../shared/form/GoInput";
 import { FormProvider, useForm } from "react-hook-form";
-import GoSelect from "../../shared/form/GoSelect";
 import { useUTRMutation, useUTRQuery } from "../../../hooks/utr";
+import GoRadio from "../../shared/form/GoRadio";
+import GoCheckbox from "../../shared/form/GoCheckbox";
 
 const EditDeposit = ({ modal, setModal, refetch }) => {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ const EditDeposit = ({ modal, setModal, refetch }) => {
       ...values,
       type: "editUTR",
       depositId: modal?.id,
+      lock_withdraw: values.lock_withdraw ? 1 : 0,
     };
 
     mutate(payload, {
@@ -53,11 +55,6 @@ const EditDeposit = ({ modal, setModal, refetch }) => {
       },
     });
   };
-  const statusData = [
-    { label: "PENDING", key: "PENDING" },
-    { label: "APPROVED", key: "APPROVED" },
-    { label: "REJECTED", key: "REJECTED" },
-  ];
 
   if (!data?.result) {
     return null;
@@ -86,15 +83,35 @@ const EditDeposit = ({ modal, setModal, refetch }) => {
                 />
               </div>
 
-              <GoSelect
-                label="Status"
-                name="status"
-                required
-                placeholder="Select"
-                data={statusData}
-                defaultValue={data?.result?.status}
-              />
+              <div>
+                <label>Status</label>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0px 10px",
+                  }}
+                >
+                  <GoRadio
+                    required
+                    label="Approve"
+                    name="status"
+                    value="APPROVED"
+                  />
 
+                  <GoRadio
+                    required
+                    label="Reject"
+                    name="status"
+                    value="REJECTED"
+                  />
+                </div>
+              </div>
+              <GoCheckbox
+                type="checkbox"
+                label="Lock Withdraw"
+                name="lock_withdraw"
+              />
               <GoInput
                 label="Bank Name"
                 name="bank_name"

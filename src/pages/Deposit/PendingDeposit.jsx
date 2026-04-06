@@ -59,6 +59,7 @@ const PendingDeposit = () => {
       {modal?.name === ModalNames.editDeposit && (
         <EditDeposit modal={modal} setModal={setModal} refetch={refetch} />
       )}
+
       {image && <ImagePreview image={image} setImage={setImage} />}
       {/* Header */}
       <PageHeader title="Pending Deposit" />

@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Deposit from "../../components/modal/Deposit/Deposit";
 import Withdraw from "../../components/modal/Withdraw/Withdraw";
 import ChangePassword from "../../components/modal/ChangePassword/ChangePassword";
-import ChangeStatus from "../../components/modal/ChangeStatus/ChangeStatus";
+import ChangeBranchStatus from "../../components/modal/ChangeBranchStatus/ChangeBranchStatus";
 import CreditReference from "../../components/modal/CreditReference/CreditReference";
 import WhatsappNumber from "../../components/modal/WhatsappNumber/WhatsappNumber";
 import DashboardBalance from "../../components/modal/DashboardBalance/DashboardBalance";
@@ -49,7 +49,11 @@ const ViewSuperBranches = () => {
         <ChangePassword modal={modal} setModal={setModal} refetch={refetch} />
       )}
       {modal?.name === ModalNames.changeStatus && (
-        <ChangeStatus modal={modal} setModal={setModal} refetch={refetch} />
+        <ChangeBranchStatus
+          modal={modal}
+          setModal={setModal}
+          refetch={refetch}
+        />
       )}
       {modal?.name === ModalNames.creditReference && (
         <CreditReference modal={modal} setModal={setModal} refetch={refetch} />

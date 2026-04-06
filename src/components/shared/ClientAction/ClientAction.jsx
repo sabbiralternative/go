@@ -9,10 +9,10 @@ import DirectDeposit from "../../modal/DirectDeposit/DirectDeposit";
 import ChangeBranch from "../../modal/ChangeBranch/ChangeBranch";
 import { FaEllipsisVertical } from "react-icons/fa6";
 import ModalWrapper from "../../modal/ModalWrapper/ModalWrapper";
-import ChangeStatus from "../../modal/ChangeStatus/ChangeStatus";
 import ChangePassword from "../../modal/ChangePassword/ChangePassword";
 import CreditReference from "../../modal/CreditReference/CreditReference";
 import ChangeColor from "../../modal/ChangeColor/ChangeColor";
+import ChangeClientStatus from "../../modal/ChangeClientStatus/ChangeClientStatus";
 
 const ClientAction = ({ refetchClient, client, index }) => {
   const showMoreRef = useRef();
@@ -77,7 +77,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
         />
       )}
       {modal?.name === ModalNames.changeStatus && (
-        <ChangeStatus
+        <ChangeClientStatus
           modal={modal}
           setModal={setModal}
           refetch={refetchClient}

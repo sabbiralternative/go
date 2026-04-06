@@ -72,6 +72,7 @@ import AddWhatsappDeposit from "../pages/Payments/AddWhatsappDeposit";
 import AddWhiteLabel from "../pages/Whitelabel/AddWhiteLabel";
 import ViewWhiteLabel from "../pages/Whitelabel/ViewWhiteLabel";
 import UpdateWhiteLabel from "../pages/Whitelabel/UpdateWhiteLabel";
+import WithdrawLockedClients from "../pages/Clients/WithdrawLockedClients";
 
 export const router = createBrowserRouter(
   [
@@ -131,6 +132,10 @@ export const router = createBrowserRouter(
         {
           path: "/premium-clients",
           element: <PremiumClients />,
+        },
+        {
+          path: "/withdraw-locked-clients",
+          element: <WithdrawLockedClients />,
         },
         {
           path: "/view-branch",
