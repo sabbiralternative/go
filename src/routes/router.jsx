@@ -73,6 +73,9 @@ import AddWhiteLabel from "../pages/Whitelabel/AddWhiteLabel";
 import ViewWhiteLabel from "../pages/Whitelabel/ViewWhiteLabel";
 import UpdateWhiteLabel from "../pages/Whitelabel/UpdateWhiteLabel";
 import WithdrawLockedClients from "../pages/Clients/WithdrawLockedClients";
+import AddCoupon from "../pages/Coupons/AddCoupon";
+import ViewCoupons from "../pages/Coupons/ViewCoupons";
+import CouponStatement from "../pages/Coupons/CouponStatement";
 
 export const router = createBrowserRouter(
   [
@@ -369,6 +372,18 @@ export const router = createBrowserRouter(
         {
           path: "/update-whitelabel",
           element: <UpdateWhiteLabel />,
+        },
+        {
+          path: "/add-coupon",
+          element: <AddCoupon />,
+        },
+        {
+          path: "/view-coupons",
+          element: <ViewCoupons />,
+        },
+        {
+          path: "/coupon-statement",
+          element: <CouponStatement />,
         },
       ],
     },

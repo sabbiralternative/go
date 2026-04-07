@@ -19,7 +19,11 @@ export default function GoSelect({
         </option>
         {data?.map((item, i) => {
           return (
-            <option key={i} value={item?.key}>
+            <option
+              selected={defaultValue === item?.value}
+              key={i}
+              value={item?.value}
+            >
               {item?.label}
             </option>
           );

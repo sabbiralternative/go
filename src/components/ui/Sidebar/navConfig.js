@@ -427,7 +427,29 @@ export const getNavItems = (permissions, adminRole, setters) => {
             },
           ],
         },
-
+        {
+          label: "Coupons",
+          key: "coupons",
+          willSubTab: true,
+          show: adminRole === AdminRole.hyper_master,
+          children: [
+            {
+              label: "View Coupons",
+              href: "/view-coupons",
+              show: adminRole === AdminRole.hyper_master,
+            },
+            {
+              label: "Add Coupon",
+              href: "/add-coupon",
+              show: adminRole === AdminRole.hyper_master,
+            },
+            {
+              label: "Coupon Statement",
+              href: "/coupon-statement",
+              show: adminRole === AdminRole.hyper_master,
+            },
+          ],
+        },
         {
           label: "Pending Bonus",
           href: "/pending-bonus",
