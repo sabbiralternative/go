@@ -75,7 +75,7 @@ import UpdateWhiteLabel from "../pages/Whitelabel/UpdateWhiteLabel";
 import WithdrawLockedClients from "../pages/Clients/WithdrawLockedClients";
 import AddCoupon from "../pages/Coupons/AddCoupon";
 import ViewCoupons from "../pages/Coupons/ViewCoupons";
-import CouponStatement from "../pages/Coupons/CouponStatement";
+import CouponBonusReport from "../pages/Coupons/CouponBonusReport";
 
 export const router = createBrowserRouter(
   [
@@ -382,8 +382,8 @@ export const router = createBrowserRouter(
           element: <ViewCoupons />,
         },
         {
-          path: "/coupon-statement",
-          element: <CouponStatement />,
+          path: "/coupon-bonus-report",
+          element: <CouponBonusReport />,
         },
       ],
     },

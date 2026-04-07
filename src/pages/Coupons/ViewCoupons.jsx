@@ -75,10 +75,14 @@ const ViewCoupons = () => {
               <span>Coupon Amount</span>
               <span>{bonus?.coupon_amount}</span>
             </div>
+            <div className="row">
+              <span>Date Added</span>
+              <span>{bonus?.date_added}</span>
+            </div>
 
             <div className="row">
-              <span>Coupon Expiry Days</span>
-              <span> {bonus?.coupon_expiry_days}</span>
+              <span>Expiry Date</span>
+              <span> {bonus?.expiry_date}</span>
             </div>
             <div className="row">
               <span>Usage Limits</span>
