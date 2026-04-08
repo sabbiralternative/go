@@ -12,8 +12,10 @@ import { FaEdit } from "react-icons/fa";
 import EditDeposit from "../../components/modal/EditDeposit/EditDeposit";
 import LevelTable from "../../components/shared/LevelTable/LevelTable";
 import ClientColor from "../../components/shared/ClientColor/ClientColor";
+import { useNavigate } from "react-router-dom";
 
 const PendingDeposit = () => {
+  const navigate = useNavigate();
   const [modal, setModal] = useState({
     name: "",
     id: "",
@@ -175,7 +177,14 @@ const PendingDeposit = () => {
             <div className="row">
               <span>UTR</span>
               <span>
-                {deposit?.utr}{" "}
+                <span
+                  onClick={() =>
+                    navigate(`/utr-search?searchUTR=${deposit?.utr}`)
+                  }
+                >
+                  {" "}
+                  {deposit?.utr}{" "}
+                </span>
                 <MdOutlineContentCopy
                   style={{ cursor: "pointer" }}
                   onClick={() => handleCopyToClipBoard(deposit?.utr)}

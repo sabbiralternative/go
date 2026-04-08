@@ -1,6 +1,5 @@
 import { Fragment, useState } from "react";
 import PageHeader from "../../components/shared/PageHeader/PageHeader";
-import { useLossBackMutation } from "../../hooks/lossback";
 import { useExportCSVMutation } from "../../hooks/exportCSV";
 import { useGetIndexQuery } from "../../hooks";
 import { useSelector } from "react-redux";
@@ -9,6 +8,7 @@ import moment from "moment";
 import { AdminRole } from "../../constant/constant";
 import { DatePicker, Pagination } from "rsuite";
 import DefaultDateButton from "../../components/shared/DefaultDateButton/DefaultDateButton";
+import { useBonusMutation } from "../../hooks/bonus";
 
 const CouponBonusReport = () => {
   const { mutate: exportMutation } = useExportCSVMutation();
@@ -23,7 +23,7 @@ const CouponBonusReport = () => {
   const [activePage, setActivePage] = useState(1);
 
   const payload = {
-    type: "view_lossback_report",
+    type: "view_coupon_report",
     pagination: true,
     page: activePage,
     fromDate: moment(startDate).format("YYYY-MM-DD"),
@@ -37,7 +37,7 @@ const CouponBonusReport = () => {
     payload.branch_id = branchId;
   }
 
-  const { mutate, isSuccess, data } = useLossBackMutation();
+  const { mutate, isSuccess, data } = useBonusMutation();
   const meta = data?.pagination;
 
   const handleExport = async () => {
@@ -176,38 +176,22 @@ const CouponBonusReport = () => {
               </span>
             </div>
             <div className="row">
-              <span>Punter Id</span>
-              <span className="right">{loss_back?.punter_id}</span>
+              <span>Client Id</span>
+              <span className="right">{loss_back?.client_id}</span>
             </div>
             <div className="row">
-              <span>Bonus Amount</span>
-              <span> {loss_back?.bonus_amount}</span>
+              <span>Amount</span>
+              <span> {loss_back?.amount}</span>
             </div>
 
             <div className="row">
-              <span>Bonus Percent</span>
-              <span>{loss_back?.bonus_percent}</span>
+              <span>Coupon Code</span>
+              <span>{loss_back?.coupon_code}</span>
             </div>
 
-            <div className="row">
-              <span>Branch Name</span>
-              <span> {loss_back?.branch_name}</span>
-            </div>
             <div className="row">
               <span>Date Added</span>
               <span> {loss_back?.date_added}</span>
-            </div>
-            <div className="row">
-              <span>Loginname</span>
-              <span> {loss_back?.loginname}</span>
-            </div>
-            <div className="row">
-              <span>Minimum Loss Amount</span>
-              <span> {loss_back?.minimum_loss_amount} </span>
-            </div>
-            <div className="row">
-              <span>Total Loss Amount</span>
-              <span> {loss_back?.total_loss_amount} </span>
             </div>
           </div>
         );
