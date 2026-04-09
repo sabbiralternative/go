@@ -85,12 +85,10 @@ const UTRSearch = () => {
                 <span className="right">{client?.user_id}</span>
               </div>
 
-              {client?.loginnameVisible && (
-                <div className="row">
-                  <span>Login Name</span>
-                  <span>{client?.loginname}</span>
-                </div>
-              )}
+              <div className="row">
+                <span>Branch Name</span>
+                <span>{client?.branch_name}</span>
+              </div>
 
               <div className="row">
                 <span>Amount</span>
