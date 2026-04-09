@@ -13,14 +13,15 @@ AxiosSecure.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
     if (config?.method === "post") {
-      const generatedToken = handleRandomToken();
+      if (!(config.data instanceof FormData)) {
+        const generatedToken = handleRandomToken();
+        let payload = {
+          ...config.data,
+          token: generatedToken,
+        };
 
-      let payload = {
-        ...config.data,
-        token: generatedToken,
-      };
-
-      config.data = payload;
+        config.data = payload;
+      }
     }
     return config;
   },
@@ -28,7 +29,7 @@ AxiosSecure.interceptors.request.use(
     // Do something with request error
 
     return Promise.reject(error);
-  }
+  },
 );
 
 // Add a response interceptor
@@ -42,5 +43,5 @@ AxiosSecure.interceptors.response.use(
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     return Promise.reject(error);
-  }
+  },
 );
