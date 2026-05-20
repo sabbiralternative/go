@@ -1320,6 +1320,10 @@ select {
   color: #f44336;
 }
 
+.text-success {
+  color: #1cac40;
+}
+
 .table-container {
   width: 100%;
   overflow-x: auto;
@@ -1394,4 +1398,13 @@ tbody tr:hover {
   white-space: nowrap;
   vertical-align: baseline;
   border-radius: var(--bs-badge-border-radius);
+}
+.SUCCESS {
+  color: #5a8dee !important;
+}
+.DANGER {
+  color: #ff5b5c !important;
+}
+.WARNING {
+  color: #f44336 !important;
 }

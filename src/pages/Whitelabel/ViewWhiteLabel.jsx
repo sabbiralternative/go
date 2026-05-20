@@ -156,7 +156,7 @@ const ViewWhiteLabel = () => {
               <span>{whiteLabel?.currency}</span>
             </div>
             <div className="actions">
-              <button
+              {/* <button
                 className="btn btn-success"
                 onClick={() => handleOpenModal(whiteLabel, ModalNames.deposit)}
               >
@@ -186,7 +186,7 @@ const ViewWhiteLabel = () => {
                 }
               >
                 CR
-              </button>
+              </button> */}
 
               <button
                 className="btn btn-outline"

@@ -60,7 +60,14 @@ const AddStaff = () => {
       label: "Dashboard",
       value: "dashboard",
       show:
-        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+        adminRole === AdminRole.hyper_master ||
+        adminRole === AdminRole.master ||
+        adminRole === AdminRole.admin_master,
+    },
+    {
+      label: "Whitelable",
+      value: "whitelable",
+      show: adminRole === AdminRole.admin_master,
     },
     {
       label: "Deposit",
@@ -95,7 +102,9 @@ const AddStaff = () => {
       label: "Report",
       value: "report",
       show:
-        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+        adminRole === AdminRole.hyper_master ||
+        adminRole === AdminRole.master ||
+        adminRole === AdminRole.admin_master,
     },
     {
       label: "Settings",
@@ -111,7 +120,9 @@ const AddStaff = () => {
       label: "Exposure",
       value: "exposure",
       show:
-        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+        adminRole === AdminRole.hyper_master ||
+        adminRole === AdminRole.master ||
+        adminRole === AdminRole.admin_master,
     },
 
     {
@@ -145,6 +156,21 @@ const AddStaff = () => {
       label: "Change Branch",
       value: "change_branch",
       show: adminRole === AdminRole.hyper_master,
+    },
+    {
+      label: "Client Color",
+      value: "client_color",
+      show: adminRole === AdminRole.hyper_master,
+    },
+    {
+      label: "Client Level",
+      value: "client_level",
+      show: adminRole === AdminRole.hyper_master,
+    },
+    {
+      label: "Admin",
+      value: "admin",
+      show: adminRole === AdminRole.admin_master,
     },
   ];
 

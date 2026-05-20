@@ -76,6 +76,8 @@ import WithdrawLockedClients from "../pages/Clients/WithdrawLockedClients";
 import AddCoupon from "../pages/Coupons/AddCoupon";
 import ViewCoupons from "../pages/Coupons/ViewCoupons";
 import CouponBonusReport from "../pages/Coupons/CouponBonusReport";
+import ViewAdmin from "../pages/Admin/ViewAdmin";
+import PendingWithdrawGateway from "../pages/Withdraw/PendingWithdrawGateway";
 
 export const router = createBrowserRouter(
   [
@@ -175,6 +177,10 @@ export const router = createBrowserRouter(
         {
           path: "/rejected-withdraw",
           element: <RejectedWithdraw />,
+        },
+        {
+          path: "/pending-withdraw-gateway",
+          element: <PendingWithdrawGateway />,
         },
         {
           path: "/view-payment-method",
@@ -384,6 +390,10 @@ export const router = createBrowserRouter(
         {
           path: "/coupon-bonus-report",
           element: <CouponBonusReport />,
+        },
+        {
+          path: "/view-admin",
+          element: <ViewAdmin />,
         },
       ],
     },

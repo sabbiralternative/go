@@ -169,17 +169,54 @@ export const getNavItems = (permissions, adminRole, setters) => {
           href: "/rejected-withdraw",
           show: true,
         },
+        {
+          label: "Pending Withdraw - Gateway",
+          href: "/pending-withdraw-gateway",
+          show: true,
+        },
+      ],
+    },
+    {
+      tab: "Exposure",
+      key: "exposure",
+      show:
+        permissions.includes("exposure") &&
+        adminRole === AdminRole.admin_master,
+      children: [
+        {
+          label: "Market Analysis",
+          href: "/market-analysis",
+          show: true,
+        },
+        {
+          label: "Current Bets",
+          href: "/current-bets",
+          show: true,
+        },
+      ],
+    },
+    {
+      tab: "Admin",
+      key: "admin",
+      show: permissions.includes("admin"),
+      children: [
+        {
+          label: "View Admin",
+          href: "/view-admin",
+          show: true,
+        },
       ],
     },
     {
       tab: "Miscellaneous",
       key: "miscellaneous",
       show:
-        permissions?.includes("payment") ||
-        permissions?.includes("exposure") ||
-        permissions?.includes("affiliate") ||
-        permissions?.includes("setting") ||
-        permissions?.includes("complaint"),
+        (permissions?.includes("payment") ||
+          permissions?.includes("exposure") ||
+          permissions?.includes("affiliate") ||
+          permissions?.includes("setting") ||
+          permissions?.includes("complaint")) &&
+        adminRole !== AdminRole.admin_master,
       willSubTab: true,
       children: [
         {

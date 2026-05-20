@@ -57,7 +57,14 @@ const UpdatePermission = ({ modal, setModal, refetch }) => {
       label: "Dashboard",
       value: "dashboard",
       show:
-        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+        adminRole === AdminRole.hyper_master ||
+        adminRole === AdminRole.master ||
+        adminRole === AdminRole.admin_master,
+    },
+    {
+      label: "Whitelable",
+      value: "whitelable",
+      show: adminRole === AdminRole.admin_master,
     },
     {
       label: "Deposit",
@@ -86,17 +93,17 @@ const UpdatePermission = ({ modal, setModal, refetch }) => {
     {
       label: "Direct Deposit",
       value: "directDeposit",
-      show: true,
+      show: adminRole !== AdminRole.admin_master,
     },
     {
       label: "Deposit With Slip",
       value: "depositWithSlip",
-      show: true,
+      show: adminRole !== AdminRole.admin_master,
     },
     {
       label: "Direct Withdraw",
       value: "directWithdraw",
-      show: true,
+      show: adminRole !== AdminRole.admin_master,
     },
     {
       label: "Payment",
@@ -108,7 +115,9 @@ const UpdatePermission = ({ modal, setModal, refetch }) => {
       label: "Report",
       value: "report",
       show:
-        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+        adminRole === AdminRole.hyper_master ||
+        adminRole === AdminRole.master ||
+        adminRole === AdminRole.admin_master,
     },
     {
       label: "Settings",
@@ -124,7 +133,9 @@ const UpdatePermission = ({ modal, setModal, refetch }) => {
       label: "Exposure",
       value: "exposure",
       show:
-        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+        adminRole === AdminRole.hyper_master ||
+        adminRole === AdminRole.master ||
+        adminRole === AdminRole.admin_master,
     },
 
     {
@@ -159,6 +170,21 @@ const UpdatePermission = ({ modal, setModal, refetch }) => {
       value: "change_branch",
       show: adminRole === AdminRole.hyper_master,
     },
+    {
+      label: "Client Color",
+      value: "client_color",
+      show: adminRole === AdminRole.hyper_master,
+    },
+    {
+      label: "Client Level",
+      value: "client_level",
+      show: adminRole === AdminRole.hyper_master,
+    },
+    {
+      label: "Admin",
+      value: "admin",
+      show: adminRole === AdminRole.admin_master,
+    },
   ];
 
   return (
@@ -168,7 +194,7 @@ const UpdatePermission = ({ modal, setModal, refetch }) => {
           <GoForm onSubmit={handleSubmit(onSubmit)}>
             {/* Modal Header */}
             <div className="modal-header">
-              <span>Change Status</span>
+              <span>Update Permission</span>
               <span onClick={closeModal} className="close-icon">
                 ✕
               </span>
@@ -183,6 +209,7 @@ const UpdatePermission = ({ modal, setModal, refetch }) => {
                 }}
               >
                 {permissionsList?.map((permission) => {
+                  if (!permission?.show) return null;
                   return (
                     <label
                       key={permission.value}

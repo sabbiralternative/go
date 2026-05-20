@@ -75,6 +75,7 @@ export const API = {
   affiliate: "",
   lossback: "",
   upload_assets: "",
+  admin: "",
 };
 
 export const Settings = {

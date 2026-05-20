@@ -5,7 +5,11 @@ import { useGetIndexQuery } from "../../hooks";
 import { AdminRole } from "../../constant/constant";
 import { useMarketAnalysisQuery } from "../../hooks/marketAnalysis";
 import PageHeader from "../../components/shared/PageHeader/PageHeader";
-
+import { BiSolidCricketBall } from "react-icons/bi";
+import { IoFootball } from "react-icons/io5";
+import { IoTennisball } from "react-icons/io5";
+import { MdSportsKabaddi } from "react-icons/md";
+import { LiaUniversitySolid } from "react-icons/lia";
 const MarketAnalysis = () => {
   const navigate = useNavigate();
   const { adminRole } = useSelector((state) => state?.auth);
@@ -72,6 +76,13 @@ const MarketAnalysis = () => {
       ),
     }));
   }, [marketAnalysis]);
+  const eventIcons = {
+    1: IoFootball,
+    2: IoTennisball,
+    4: BiSolidCricketBall,
+    5: MdSportsKabaddi,
+    6: LiaUniversitySolid,
+  };
 
   return (
     <Fragment>
@@ -128,6 +139,7 @@ const MarketAnalysis = () => {
           </thead>
           <tbody className="table-border-bottom-0">
             {structuredData.map((event, i) => {
+              const Icon = eventIcons[event.event_type_id];
               return (
                 <Fragment key={i}>
                   <tr
@@ -143,7 +155,14 @@ const MarketAnalysis = () => {
                       )
                     }
                   >
-                    <td colSpan="100%" style={{ fontWeight: "bold" }}>
+                    <td
+                      colSpan="100%"
+                      style={{
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {" "}
+                      <Icon />
                       {event.event_name}
                     </td>
                   </tr>
