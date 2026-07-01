@@ -52,6 +52,7 @@ const AddUSDT = () => {
       type: "addPayment",
       ...values,
       method: "usdt",
+      gateway: 0,
     };
 
     const data = await mutateAsync(payload);

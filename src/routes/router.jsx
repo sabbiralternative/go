@@ -78,6 +78,8 @@ import ViewCoupons from "../pages/Coupons/ViewCoupons";
 import CouponBonusReport from "../pages/Coupons/CouponBonusReport";
 import ViewAdmin from "../pages/Admin/ViewAdmin";
 import PendingWithdrawGateway from "../pages/Withdraw/PendingWithdrawGateway";
+import AddGoldyPaymentGateway from "../pages/Payments/AddGoldyPaymentGateway";
+import AddFirstPayPaymentGateway from "../pages/Payments/AddFirstPayPaymentGateway";
 
 export const router = createBrowserRouter(
   [
@@ -349,6 +351,14 @@ export const router = createBrowserRouter(
         {
           path: "/add-toit-payment-gateway",
           element: <AddTOITPaymentGateway />,
+        },
+        {
+          path: "/add-goldy-payment-gateway",
+          element: <AddGoldyPaymentGateway />,
+        },
+        {
+          path: "/add-firstpay-payment-gateway",
+          element: <AddFirstPayPaymentGateway />,
         },
         {
           path: "/add-i100-payment-gateway",

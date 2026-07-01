@@ -22,6 +22,7 @@ const AddI100PaymentGateway = () => {
       type: "addPayment",
       ...values,
       method: "i100gateway",
+      gateway: 1,
     };
 
     const data = await mutateAsync(payload);

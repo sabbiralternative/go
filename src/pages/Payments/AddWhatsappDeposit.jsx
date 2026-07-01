@@ -21,6 +21,7 @@ const AddWhatsappDeposit = () => {
       type: "addPayment",
       ...values,
       method: "whatsapp",
+      gateway: 0,
     };
 
     const data = await mutateAsync(payload);

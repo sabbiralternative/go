@@ -52,6 +52,7 @@ const AddQR = () => {
       type: "addPayment",
       ...values,
       method: "qr",
+      gateway: 0,
     };
 
     const data = await mutateAsync(payload);

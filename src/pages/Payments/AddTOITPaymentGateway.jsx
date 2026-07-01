@@ -22,6 +22,7 @@ const AddTOITPaymentGateway = () => {
       type: "addPayment",
       ...values,
       method: "toitgateway",
+      gateway: 1,
     };
 
     const data = await mutateAsync(payload);

@@ -52,6 +52,7 @@ const AddUSDTBEP20 = () => {
       type: "addPayment",
       ...values,
       method: "usdt_bep20",
+      gateway: 0,
     };
 
     const data = await mutateAsync(payload);

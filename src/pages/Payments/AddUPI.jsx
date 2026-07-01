@@ -22,6 +22,7 @@ const AddUPI = () => {
       type: "addPayment",
       ...values,
       method: "upi",
+      gateway: 0,
     };
 
     const data = await mutateAsync(payload);

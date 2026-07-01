@@ -286,6 +286,20 @@ export const getNavItems = (permissions, adminRole, setters) => {
                 adminRole !== AdminRole.admin_staff,
             },
             {
+              label: "Add Goldy Payment Gateway",
+              href: "/add-goldy-payment-gateway",
+              show:
+                adminRole !== AdminRole.hyper_master &&
+                adminRole !== AdminRole.admin_staff,
+            },
+            {
+              label: "Add FirstPay Payment Gateway",
+              href: "/add-firstpay-payment-gateway",
+              show:
+                adminRole !== AdminRole.hyper_master &&
+                adminRole !== AdminRole.admin_staff,
+            },
+            {
               label: "Add i100 Payment Gateway",
               href: "/add-i100-payment-gateway",
               show:
