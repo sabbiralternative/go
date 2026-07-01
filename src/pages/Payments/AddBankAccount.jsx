@@ -22,6 +22,7 @@ const AddBankAccount = () => {
       type: "addPayment",
       ...values,
       method: "bank",
+      gateway: 0,
     };
 
     const data = await mutateAsync(payload);
