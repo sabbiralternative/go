@@ -53,9 +53,11 @@ const DirectDeposit = ({ modal, setModal, refetchClient }) => {
       downlineId: modal?.downlineId,
       type: "deposit",
       ...values,
+      bonus: values?.bonus ? 1 : 0,
       amount,
       role: modal?.role,
     };
+    console.log(payload);
     downlineEdit(payload, {
       onSuccess: (data) => {
         if (data?.success) {
@@ -172,6 +174,33 @@ const DirectDeposit = ({ modal, setModal, refetchClient }) => {
               />
             </div>
             <div style={{ position: "relative" }}>
+              <label> Bonus</label>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(3, 1fr)",
+                  gap: "0px 20px",
+                }}
+              >
+                <label
+                  style={{
+                    display: "flex",
+                    width: "fit-content",
+                    gap: "5px",
+                    alignItems: "center",
+                    marginBottom: "15px",
+                  }}
+                >
+                  <input
+                    style={{ width: "fit-content" }}
+                    type="checkbox"
+                    {...register("bonus")}
+                  />
+                  <span>Bonus</span>
+                </label>
+              </div>
+            </div>
+            <div style={{ position: "relative" }}>
               <label> Remark</label>
               <input
                 type="text"
@@ -179,6 +208,7 @@ const DirectDeposit = ({ modal, setModal, refetchClient }) => {
                 placeholder="Enter Remark"
               />
             </div>
+
             <div style={{ position: "relative" }}>
               <label> Transaction Code</label>
               <input

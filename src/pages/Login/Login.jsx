@@ -6,6 +6,8 @@ import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/features/auth/authSlice";
 import assets from "../../assets";
+import { AxiosSecure } from "../../lib/AxiosSecure";
+import handleEncryptData from "../../utils/handleEncryptData";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -44,47 +46,42 @@ const Login = () => {
     }
 
     const hmac = await hmacSHA256(json, secret);
-
-    fetch(API.login, {
-      method: "POST",
-
+    const encryptedData = handleEncryptData(loginData);
+    const res = await AxiosSecure.post(API.login, encryptedData, {
       headers: {
         "content-type": "application/json",
         secret: hmac,
       },
-      body: JSON.stringify(loginData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.success) {
-          setDisabled(false);
-          if (data?.result?.changePassword) {
-            navigate(`/change-password?token=${data?.result?.token}`);
-          }
-          if (data?.result?.changePassword === false) {
-            const readOnly = data?.result?.readOnly;
-            const adminToken = data?.result?.token;
-            const adminName = data?.result?.loginname;
-            const adminRole = data?.result?.role;
-            const adminSite = data?.result?.site;
-            dispatch(
-              setUser({
-                readOnly,
-                adminToken,
-                adminName,
-                adminRole,
-                adminSite,
-              }),
-            );
-            localStorage.setItem("adminToken", adminToken);
-            toast.success("Login Success");
-            navigate("/");
-          }
-        } else {
-          setDisabled(false);
-          toast.error(data?.error?.status?.[0]?.description);
-        }
-      });
+    });
+    const data = res.data;
+    if (data?.success) {
+      setDisabled(false);
+      if (data?.result?.changePassword) {
+        navigate(`/change-password?token=${data?.result?.token}`);
+      }
+      if (data?.result?.changePassword === false) {
+        const readOnly = data?.result?.readOnly;
+        const adminToken = data?.result?.token;
+        const adminName = data?.result?.loginname;
+        const adminRole = data?.result?.role;
+        const adminSite = data?.result?.site;
+        dispatch(
+          setUser({
+            readOnly,
+            adminToken,
+            adminName,
+            adminRole,
+            adminSite,
+          }),
+        );
+        localStorage.setItem("adminToken", adminToken);
+        toast.success("Login Success");
+        navigate("/");
+      }
+    } else {
+      setDisabled(false);
+      toast.error(data?.error?.status?.[0]?.description);
+    }
   };
 
   return (
